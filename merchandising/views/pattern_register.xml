@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        Tree view
+    <record id="pattern_register_tree_view" model="ir.ui.view">
+        <field name="name">pattern.register.tree.view</field>
+        <field name="model">pattern.register</field>
+        <field name="arch" type="xml">
+            <tree string="Pattern Register">
+                <field name="serial_num"/>
+                <field name="series_name"/>
+                <field name="style_no"/>
+                <field name="customer_name"/>
+                <field name="receiver_name"/>
+                <field name="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+     End Tree View
+
+    <!-- Form View for  -->
+    <record id="pattern_register_form_view" model="ir.ui.view">
+        <field name="name">pattern.register.form.view</field>
+        <field name="model">pattern.register</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="pattern_register_confirm" string="Confirm" states="draft" type="object" class="btn-primary"/>
+                    <button name="pattern_register_cancel" string="Cancel" states="confirm" type="object" class="btn-primary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h2>
+                            <field name="serial_num" readonly="1"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="mds_ids" widget="many2many_tags" options='{"no_open": True,"no_create": 1, "no_create_edit":1}'/>
+                            <field name="series_name"/>
+                            <field name="style_no"/>
+                            <field name="customer_name"/>
+                        </group>
+                        <group>
+                            <field name="receiver_name"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Pattern Details">
+                            <field name="pattern_register_line_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="pattern_name"/>
+                                    <field name="pattern_details"/>
+                                    <field name="material_type"/>
+                                    <field name="length"/>
+                                    <field name="width"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                    <!-- Add Chatter Form View for  -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+                    <!-- End Add chatter Form View for  -->
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action  -->
+    <record id="action_pattern_register" model="ir.actions.act_window" >
+        <field name="name"> Pattern Register </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pattern.register</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

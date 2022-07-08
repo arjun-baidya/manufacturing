@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        Tree view
+    <record id="sample_pattern_cut_tree_view" model="ir.ui.view">
+        <field name="name">sample.pattern.cut.tree.view</field>
+        <field name="model">sample.pattern.cut</field>
+        <field name="arch" type="xml">
+            <tree string="Sample Pattern Cut">
+                <field name="name"/>
+                <field name="received_name"/>
+                <field name="received_date"/>
+                <field name="target_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+     End Tree View
+
+    <!-- Form View for  -->
+    <record id="sample_pattern_cut_form_view" model="ir.ui.view">
+        <field name="name">sample.pattern.cut.form.view</field>
+        <field name="model">sample.pattern.cut</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="pattern_start_btn" string="Pattern Start" states="draft" type="object" class="btn-primary"/>
+                    <button name="sample_pattern_cancel" string="Cancel" states="pattern_start" type="object" class="btn-primary"/>
+                    <button name="pattern_end_btn" string="Pattern End" states="pattern_start" type="object" class="btn-primary"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}" statusbar_visible="draft,pattern_start,pattern_end"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h2>
+                            <field name="name" readonly="1"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="received_name"/>
+                            <field name="received_date"/>
+                            <field name="pattern_qty"/>
+                            <field name="target_date"/>
+                            <field name="series_name"/>
+                            <field name="style_no"/>
+                            <field name="customer_name"/>
+                        </group>
+                        <group>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                            <field name="pattern_cut_duration"/>
+                            <field name="product"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Details">
+                            <field name="pattern_cut_line_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="pattern"/>
+                                    <field name="type"/>
+                                    <field name="length"/>
+                                    <field name="width"/>
+                                    <field name="pcs"/>
+                                    <field name="size"/>
+                                    <field name="uom"/>
+                                    <field name="loss_percentage"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                    <!-- Add Chatter Form View for  -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+                    <!-- End Add chatter Form View for  -->
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action  -->
+    <record id="action_sample_pattern_cut" model="ir.actions.act_window" >
+        <field name="name"> Sample Pattern Cut </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sample.pattern.cut</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

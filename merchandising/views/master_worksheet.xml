@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="master_work_sheet_tree_view" model="ir.ui.view">
+        <field name="name">master.sheet.tree.view</field>
+        <field name="model">mrp.master.worksheet</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="md_sheet_id"/>
+                <field name="manufacturing_order_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="master_work_sheet_form_view" model="ir.ui.view">
+        <field name="name">master.sheet.form.view</field>
+        <field name="model">mrp.master.worksheet</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="data_get" type="object" string="pull data" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h2>
+                            <field name="name" readonly="1"/>
+                        </h2>
+                    </div>
+                    <group>
+
+                        <field name="manufacturing_order_id"/>
+                        <field name="quantity"/>
+                        <field name="md_sheet_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Master Line">
+                            <field name="master_worksheet_line_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="material_name"/>
+                                    <field name="part_name"/>
+                                    <field name="pcs"/>
+                                    <field name="qty"/>
+                                    <field name="total"/>
+                                    <field name="cutting_pending"/>
+                                    <field name="cutting_done"/>
+                                    <field name="skiving_pending"/>
+                                    <field name="skiving_done"/>
+                                    <field name="assemble_pending"/>
+                                    <field name="assemble_done"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_master_work_sheet" model="ir.actions.act_window">
+        <field name="name">master work sheet</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.master.worksheet</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

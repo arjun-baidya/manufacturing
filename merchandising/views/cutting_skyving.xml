@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        Tree view
+    <record id="sample_cutting_skyving_tree_view" model="ir.ui.view">
+        <field name="name">sample.cutting.skyving.tree.view</field>
+        <field name="model">sample.cutting.skyving</field>
+        <field name="arch" type="xml">
+            <tree string="Cutting Skyving">
+                <field name="md_sheet_no"/>
+                <field name="total_sample_qty"/>
+                <field name="sample_cutting_man"/>
+                <field name="cutting_start_time"/>
+                <field name="cutting_end_time"/>
+                <field name="skyving_start_time"/>
+                <field name="skyving_end_time"/>
+            </tree>
+        </field>
+    </record>
+     End Tree View
+
+    <!-- Form View for  -->
+    <record id="sample_cutting_skyving_form_view" model="ir.ui.view">
+        <field name="name">sample.cutting.skyving.form.view</field>
+        <field name="model">sample.cutting.skyving</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+<!--                    <button name="sample_cutting_skyving_confirm" string="Confirm" states="draft" type="object" class="btn-primary"/>-->
+<!--                    <button name="sample_cutting_skyving_cancel" string="Draft" states="confirm" type="object" class="btn-primary"/>-->
+                    <button name="sample_cutting_start" string="Cutting Start" states="draft" type="object" class="btn-primary"/>
+                    <button name="sample_cutting_cancel" string="Cutting Cancel" states="cutting_start" type="object" class="btn-primary"/>
+                    <button name="sample_cutting_stop" string="Cutting Stop" states="cutting_start" type="object" class="btn-primary"/>
+                    <button name="sample_skyving_start" string="Skyving Start" states="draft,cutting_end" type="object" class="btn-primary"/>
+                    <button name="sample_skyving_cancel" string="Skyving Cancel" states="skyving_start" type="object" class="btn-primary"/>
+                    <button name="sample_skyving_stop" string="Skyving Stop" states="skyving_start" type="object" class="btn-primary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,cutting_start,cutting_end,skyving_start,skyving_end"/>
+                </header>
+                <sheet>
+<!--                    <div class="oe_title">-->
+<!--                        <h2>-->
+<!--                            <field name="serial_num" readonly="1"/>-->
+<!--                        </h2>-->
+<!--                    </div>-->
+                    <group>
+                        <group>
+                            <field name="md_sheet_no"/>
+                            <field name="total_sample_qty"/>
+                            <field name="sample_cutting_man"/>
+                        </group>
+                        <group>
+                            <field name="cutting_start_time" attrs="{'invisible':[('cutting_start_time', '=', False)]}"/>
+                            <field name="cutting_end_time" attrs="{'invisible':[('cutting_end_time', '=', False)]}"/>
+                            <field name="cutting_time_result"/>
+                            <field name="skyving_start_time" attrs="{'invisible':[('skyving_start_time', '=', False)]}"/>
+                            <field name="skyving_end_time" attrs="{'invisible':[('skyving_end_time', '=', False)]}"/>
+                            <field name="skyving_time_result"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Cutting Details">
+                            <field name="sample_cutting_skyving_line_ids" >
+                                <tree editable="bottom" class="cutting_details">
+                                    <field name="product_name"/>
+                                    <field name="product_des"/>
+                                    <field name="product_qty"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                    <!-- Add Chatter Form View for  -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+                    <!-- End Add chatter Form View for  -->
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action  -->
+    <record id="action_sample_cutting_skyving" model="ir.actions.act_window" >
+        <field name="name"> Cutting Skyving </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sample.cutting.skyving</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

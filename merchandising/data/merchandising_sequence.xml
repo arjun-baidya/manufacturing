@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Sequences for Merchandising Sheet -->
+        <record id="seq_merchandising_sheet" model="ir.sequence">
+            <field name="name">Merchandising Sheet</field>
+            <field name="code">merchandising.sheet.seq</field>
+            <field name="prefix">MD</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--        document register-->
+        <record id="seq_sample_document_register" model="ir.sequence">
+            <field name="name">Sample Document Register</field>
+            <field name="code">sample.document.register.sequence</field>
+            <field name="prefix">SDR</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--        pattern register -->
+        <record id="seq_pattern_register" model="ir.sequence">
+            <field name="name">Pattern Register</field>
+            <field name="code">pattern.register.sequence</field>
+            <field name="prefix">PR</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_pattern_cut" model="ir.sequence">
+            <field name="name">Pattern Cut</field>
+            <field name="code">pattern.cut.sequence</field>
+            <field name="prefix">PC</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_bom" model="ir.sequence">
+            <field name="name">BOM</field>
+            <field name="code">bom.sequence</field>
+            <field name="prefix">BOM</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_master_worksheet" model="ir.sequence">
+            <field name="name">MWS</field>
+            <field name="code">master.work.sequence</field>
+            <field name="prefix">MWS</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_worksheet" model="ir.sequence">
+            <field name="name">WS</field>
+            <field name="code">work.sequence</field>
+            <field name="prefix">WS</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
+

@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_merchandising_sheet,access.merchandising.sheet,model_merchandising_sheet,,1,1,1,1
+access_merchandising_sheet_line,access.merchandising.sheet.line,model_merchandising_sheet_line,,1,1,1,1
+access_sample_document_register,access.sample.document.register,model_sample_document_register,,1,1,1,1
+access_sample_document_register_line,access.sample.document.register.line,model_sample_document_register_line,,1,1,1,1
+access_sample_pattern_cut,access.sample.pattern.cut,model_sample_pattern_cut,,1,1,1,1
+access_pattern_cut_line,access.pattern.cut.line,model_pattern_cut_line,,1,1,1,1
+access_pattern_register,access.pattern.register,model_pattern_register,,1,1,1,1
+access_pattern_register_line,access.pattern.register.line,model_pattern_register_line,,1,1,1,1
+access_sample_cutting_skyving,access.sample.cutting.skyving,model_sample_cutting_skyving,,1,1,1,1
+access_sample_cutting_skyving_line,access.sample.cutting.skyving.line,model_sample_cutting_skyving_line,,1,1,1,1
+
+access_mrp_master_worksheet,access.mrp.master.worksheet,model_mrp_master_worksheet,,1,1,1,1
+access_mrp_master_worksheet_line,access.mrp.master.worksheet.line,model_mrp_master_worksheet_line,,1,1,1,1
+
+access_mrp_work_sheet,access_mrp_work_sheet,model_mrp_work_sheet,,1,1,1,1
+access_mrp_work_sheet_line,access_mrp_work_sheet_line,model_mrp_work_sheet_line,,1,1,1,1
