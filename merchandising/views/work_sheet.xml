@@ -24,21 +24,46 @@
                         </h2>
                     </div>
                     <group>
-
                         <field name="master_work_sheet_id"/>
                         <field name="work_center_name"/>
                     </group>
                     <notebook>
-                        <page string="Work Sheet Line">
+                        <page string="Work Sheet Cutting" attrs="{'invisible':['|',('work_center_name', '=', 'skyving'),('work_center_name', '=', 'assemble')]}">
                             <field name="work_sheet_line_ids" widget="one2many">
                                 <tree editable="bottom">
                                     <field name="material"/>
                                     <field name="part_name"/>
-                                    <field name="cutting_pending"/>
-                                    <field name="cutting_done"/>
-                                    <field name="skiving_pending"/>
-                                    <field name="skiving_done"/>
-                                    <field name="assemble_pending"/>
+                                    <field name="cutting_pending" />
+                                    <field name="cutting_done" />
+<!--                                    <field name="skiving_pending" invisible="1"/>-->
+<!--                                    <field name="skiving_done" invisible="1"/>-->
+<!--                                    <field name="assemble_pending" invisible="1"/>-->
+<!--                                    <field name="assemble_done" invisible="1"/>-->
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Work Sheet Skiving" attrs="{'invisible':['|',('work_center_name', '=', 'cutting'),('work_center_name', '=', 'assemble')]}">
+                            <field name="work_sheet_line_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="material"/>
+                                    <field name="part_name"/>
+                                    <field name="skiving_pending" />
+                                    <field name="skiving_done" />
+<!--                                    <field name="assemble_pending" invisible="1"/>-->
+<!--                                    <field name="assemble_done" invisible="1"/>-->
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Work Sheet Assemble" attrs="{'invisible':['|',('work_center_name', '=', 'skyving'),('work_center_name', '=', 'cutting')]}">
+                            <field name="work_sheet_line_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="material"/>
+                                    <field name="part_name"/>
+<!--                                    <field name="cutting_pending" invisible="1"/>-->
+<!--                                    <field name="cutting_done" invisible="1"/>-->
+<!--                                    <field name="skiving_pending" invisible="1"/>-->
+<!--                                    <field name="skiving_done" invisible="1"/>-->
+                                    <field name="assemble_pending" />
                                     <field name="assemble_done"/>
                                 </tree>
                             </field>

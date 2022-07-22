@@ -51,5 +51,14 @@ class BomInherit(models.Model):
                     lines.append((0, 0, val))
             rec.bom_line_ids = lines
 
-
-
+    def merge_duplicate_product_in_bom(self):
+        if self.bom_line_ids:
+            for line in self.bom_line_ids:
+                if line.id in self.bom_line_ids.ids:
+                    line_ids = self.bom_line_ids.filtered(lambda m: m.product_id == line.product_id)
+                    quantity = 0
+                    for qty in line_ids:
+                        quantity += qty.product_qty
+                    line_ids[0].write({'product_qty': quantity,
+                                       'product_id': line_ids[0].product_id})
+                    line_ids[1:].unlink()

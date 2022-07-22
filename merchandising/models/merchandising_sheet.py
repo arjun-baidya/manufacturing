@@ -187,6 +187,26 @@ class MerchandisingSheet(models.Model):
         self.env['merchandising.sheet'].search([('id', '=', self.id)])
         return result
 
+    def merge_duplicate_materials(self):
+        if self.order_line:
+            for line in self.order_line:
+                if line.id in self.order_line.ids:
+                    line_ids = self.order_line.filtered(lambda m: m.product_id.id == line.product_id.id)
+                    net_for_report = 0.0
+                    total_for_report = 0.0
+                    for qty in line_ids:
+                        net_for_report += qty.net
+                        total_for_report += qty.total
+                    line_ids[0].write({
+                                       'product_id_for_report': line_ids[0].product_id.name,
+                                       'net_for_report': net_for_report,
+                                       'uom_for_report': line_ids[0].uom.name,
+                                       'net_loss_for_report': line_ids[0].net_loss,
+                                       'unit_price_for_report': line_ids[0].unit_price,
+                                       'total_for_report': total_for_report,
+                                       })
+                    # line_ids[1:].unlink()
+
 
 class MerchandisingSheetLine(models.Model):
     _name = 'merchandising.sheet.line'
@@ -195,6 +215,7 @@ class MerchandisingSheetLine(models.Model):
 
     product_category = fields.Many2one('product.category', string="Category")
     product_id = fields.Many2one('product.product', string='Material')
+    product_id_for_report = fields.Char()
     pattern = fields.Many2one('sample.pattern.cut', string="Pattern")
     part_name = fields.Many2one('pattern.cut.line', string="Part Name")
     combination = fields.Many2many('product.product', string="Combination")
@@ -203,16 +224,23 @@ class MerchandisingSheetLine(models.Model):
     pcs = fields.Integer(string="PCS")
     size = fields.Integer(string="Size")
     uom = fields.Many2one('uom.uom', string="UOM")
+    uom_for_report = fields.Char()
     net = fields.Float(string="Net", compute='calculate_net')
+    net_for_report = fields.Float()
     factory_loss = fields.Float(string="Factory Loss %")
     buyer_loss = fields.Float(string="Buyer Loss %")
     purchase_loss = fields.Float(string="Purchase Loss %")
     net_loss = fields.Float(string="Net Loss", compute="calculate_net_loss", store=True)
+    net_loss_for_report = fields.Float()
     net_buyer = fields.Float(string="Net Buyer", compute='calculate_net_buyer', store=True)
     net_purchase = fields.Float(string="Net Purchase", compute='calculate_net_purchase')
     bom_no = fields.Many2one('mrp.bom', string="BOM")
     unit_price = fields.Float(string="Unit Price")
+    unit_price_for_report = fields.Float()
     total = fields.Float(string="Total")
+    total_for_report = fields.Float()
+    arrange_by = fields.Many2one('res.partner', string="Arrange-By")
+    supplier = fields.Many2one('res.partner', string="Supplier", help="Maker")
 
     ##################
     order_id = fields.Many2one('merchandising.sheet', string='Order Reference')

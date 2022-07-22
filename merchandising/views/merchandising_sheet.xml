@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    Tree view
     <record id="merchandising_sheet_tree_view" model="ir.ui.view">
         <field name="name">merchandising.sheet.tree.view</field>
         <field name="model">merchandising.sheet</field>
@@ -18,7 +17,6 @@
             </tree>
         </field>
     </record>
-    End Tree View
 
     <!-- Form View for  -->
     <record id="merchandising_sheet_form_view" model="ir.ui.view">
@@ -27,6 +25,7 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="merge_duplicate_materials" string="Merge Buyer Estimate" class="btn-primary" type="object"/>
                     <button name="get_manufacturing_order" string="Manufac"  type="object" class="btn-primary"/>
                     <button name="md_sheet_confirm" string="Confirm" states="draft" type="object" class="btn-primary"/>
                     <!--                    <button name="merchandising.action_sample_pattern_cut" string="Pattern Cut" type="action" class="oe_highlight" />-->
@@ -88,41 +87,47 @@
                                     <field name="uom"/>
                                     <field name="net"/>
                                     <field name="factory_loss"/>
+                                    <field name="net_loss"/>
+                                </tree>
+<!--                                <form>-->
+<!--                                    <group>-->
+<!--                                        <group>-->
+<!--                                            <field name="product_category"/>-->
+<!--                                            <field name="product_id"/>-->
+<!--                                            <field name="pattern"/>-->
+<!--                                            <field name="part_name"/>-->
+<!--                                            <field name="length"/>-->
+<!--                                            <field name="width"/>-->
+<!--                                            <field name="pcs"/>-->
+<!--                                            <field name="size"/>-->
+<!--                                            <field name="uom"/>-->
+<!--                                        </group>-->
+<!--                                        <group>-->
+<!--                                            <field name="net"/>-->
+<!--                                            <field name="factory_loss"/>-->
+<!--                                            <field name="net_loss"/>-->
+<!--                                        </group>-->
+<!--                                    </group>-->
+<!--                                </form>-->
+                            </field>
+                        </page>
+                        <page string="Consumption">
+                            <field name="order_line" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="product_category"/>
+                                    <field name="product_id"/>
+                                    <field name="combination" widget="many2many_tags"/>
+                                    <field name="net"/>
                                     <field name="buyer_loss"/>
                                     <field name="purchase_loss"/>
-                                    <field name="net_loss"/>
                                     <field name="net_buyer"/>
                                     <field name="net_purchase"/>
                                     <field name="bom_no"/>
+                                    <field name="unit_price"/>
+                                    <field name="total"/>
+                                    <field name="arrange_by"/>
+                                    <field name="supplier"/>
                                 </tree>
-                                <form>
-                                    <group>
-                                        <group>
-                                            <field name="product_category"/>
-                                            <field name="product_id"/>
-                                            <field name="pattern"/>
-                                            <field name="part_name"/>
-                                            <field name="combination" widget="many2many_tags"/>
-                                            <field name="length"/>
-                                            <field name="width"/>
-                                            <field name="pcs"/>
-                                            <field name="size"/>
-                                            <field name="uom"/>
-                                        </group>
-                                        <group>
-                                            <field name="net"/>
-                                            <field name="factory_loss"/>
-                                            <field name="buyer_loss"/>
-                                            <field name="purchase_loss"/>
-                                            <field name="net_loss"/>
-                                            <field name="net_buyer"/>
-                                            <field name="net_purchase"/>
-                                            <field name="bom_no"/>
-                                            <field name="unit_price"/>
-                                            <field name="total"/>
-                                        </group>
-                                    </group>
-                                </form>
                             </field>
                         </page>
                         <page string="Document Registers">
@@ -136,7 +141,6 @@
                                     <field name="receiver_name"/>
                                     <button name="action_view_document_register" string="View" type="object"
                                             icon="fa-search-plus"/>
-                                    <!--                                    <button name="action_edit_shipment" string="Edit" type="object" icon="fa-pencil-square-o" />-->
                                 </tree>
                             </field>
                         </page>
@@ -178,7 +182,6 @@
                                     <field name="target_date"/>
                                     <button name="action_view_pattern_cut" string="View" type="object"
                                             icon="fa-search-plus"/>
-                                    <!--                                    <button name="action_edit_shipment" string="Edit" type="object" icon="fa-pencil-square-o" />-->
                                 </tree>
                             </field>
                         </page>
@@ -192,10 +195,8 @@
                                     <field name="customer_name"/>
                                     <field name="receiver_name"/>
                                     <field name="date"/>
-                                    <!--                                    <field name="pattern_register_line_leather"/>-->
                                     <button name="action_view_pattern_register" string="View" type="object"
                                             icon="fa-search-plus"/>
-                                    <!--                                    <button name="action_edit_shipment" string="Edit" type="object" icon="fa-pencil-square-o" />-->
                                 </tree>
                             </field>
                         </page>
@@ -214,7 +215,6 @@
                                     <field name="skyving_time_result"/>
                                     <button name="action_view_cutting_skyving" string="View" type="object"
                                             icon="fa-search-plus"/>
-                                    <!--                                    <button name="action_edit_shipment" string="Edit" type="object" icon="fa-pencil-square-o" />-->
                                 </tree>
                             </field>
                         </page>

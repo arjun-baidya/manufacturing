@@ -29,7 +29,7 @@
                     <group>
 
                         <field name="manufacturing_order_id"/>
-                        <field name="quantity"/>
+                        <field name="quantity" invisible="1"/>
                         <field name="md_sheet_id"/>
                     </group>
                     <notebook>

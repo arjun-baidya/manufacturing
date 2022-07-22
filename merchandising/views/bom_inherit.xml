@@ -12,6 +12,11 @@
             <xpath expr="//field[@name='product_tmpl_id']" position="before">
                 <field name="name"/>
             </xpath>
+            <xpath expr="/form/*" position="before">
+                <header>
+                    <button name="merge_duplicate_product_in_bom" type="object" class="btn-primary" string="Merge"/>
+                </header>
+            </xpath>
         </field>
     </record>
 </odoo>

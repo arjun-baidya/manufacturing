@@ -9,6 +9,14 @@ class SamplePatternCut(models.Model):
     _parent_name = "parent_id"
     _rec_name = 'name'
 
+    @api.depends('pattern_cut_line_ids', 'pattern_cut_line_ids.pcs')
+    def compute_total_pcs(self):
+        for rec in self:
+            total = 0
+            for line in rec.pattern_cut_line_ids:
+                total += line.pcs
+            rec['total_pcs'] = total
+
     name = fields.Char('PID', required=True, copy=False, readonly=True, index=True, default=lambda self: _('New'))
     received_name = fields.Many2one('hr.employee', string="Receiver")
     series_name = fields.Char(string="Series Name")
@@ -21,6 +29,7 @@ class SamplePatternCut(models.Model):
     end_time = fields.Datetime(string="End Time")
     pattern_cut_duration = fields.Float(compute='_compute_pattern_duration', string="Duration(Hour)")
     product = fields.Many2one('product.template', string="Product")
+    total_pcs = fields.Integer(string="Total PCS", compute='compute_total_pcs', store=True)
     state = fields.Selection([('draft', 'Draft'),
                               ('pattern_start', 'Pattern Start'),
                               ('pattern_end', 'Pattern End'),
@@ -33,6 +42,18 @@ class SamplePatternCut(models.Model):
     pattern_cut_line_ids = fields.One2many('pattern.cut.line', 'patten_cut_id', string="pattern cut ids")
 
     parent_id = fields.Many2one('sample.pattern.cut', 'parent id', index=True, ondelete='cascade')
+
+    def merge_duplicate_type(self):
+        if self.pattern_cut_line_ids:
+            for line in self.pattern_cut_line_ids:
+                if line.id in self.pattern_cut_line_ids.ids:
+                    line_ids = self.pattern_cut_line_ids.filtered(lambda m: m.type == line.type)
+                    quantity = 0
+                    for qty in line_ids:
+                        quantity += qty.pcs
+                    line_ids[0].write({'pcs_for_report': quantity,
+                                       'type_for_report': line_ids[0].type})
+                    # line_ids[1:].unlink()
 
     def _generate_categories(self, categories, pattern):
         categories.append(pattern)
@@ -104,6 +125,10 @@ class PatternCutLine(models.Model):
     size = fields.Integer(string="Size")
     uom = fields.Many2one('uom.uom', string="UOM")
     loss_percentage = fields.Float(string="Loss %")
+    # for report some extra field initialize
+    type_for_report = fields.Char()
+    pcs_for_report = fields.Integer()
+    ###################################
     patten_cut_id = fields.Many2one('sample.pattern.cut', string="pattern cut id")
 
 

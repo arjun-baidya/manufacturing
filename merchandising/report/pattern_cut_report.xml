@@ -45,14 +45,6 @@
                                         </div>
                                     </div>
                                     <br/>
-                                    <!--condition-->
-                                    <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                        <t t-if="line.type == 'leather'">
-                                            <span>Type :
-                                                <t t-esc="line.type"/>
-                                            </span>
-                                        </t>
-                                    </t>
                                     <table width="100%" class="table table-bordered" style="border-color:black;">
                                         <thead>
                                             <tr>
@@ -62,16 +54,16 @@
                                         </thead>
                                         <tbody>
                                             <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                                <t t-if="line.type == 'leather' ">
+                                                <t t-if="line.type_for_report">
                                                     <tr>
                                                         <td style="text-align:justify">
                                                             <a>
-                                                                <t t-esc="line.type"/>
+                                                                <t t-esc="line.type_for_report"/>
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a>
-                                                                <t t-esc="line.pcs"/>
+                                                                <t t-esc="line.pcs_for_report"/>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -83,149 +75,23 @@
                                             <td>
                                                 <t t-set="sum_row" t-value="0"/>
                                                 <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                                    <t t-if="line.type=='leather' " t-set="sum_row" t-value="sum_row+line.pcs"/>
+                                                    <t t-set="sum_row" t-value="sum_row+line.pcs_for_report"/>
                                                 </t>
-                                                <span>Total : <t t-esc="sum_row"/></span>
+                                                <span>Total :
+                                                    <t t-esc="sum_row"/>
+                                                </span>
                                             </td>
                                         </tr>
                                     </table>
-
-                                    <!--condition-->
-                                    <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                        <t t-if="line.type == 'lining'">
-                                            <span>Type :
-                                                <t t-esc="line.type"/>
-                                            </span>
-                                        </t>
-                                    </t>
-                                    <table width="100%" class="table table-bordered" style="border-color:black;">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-left">Type</th>
-                                                <th class="text-left">Quantity</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                                <t t-if="line.type == 'lining' ">
-                                                    <tr>
-                                                        <td style="text-align:justify">
-                                                            <a>
-                                                                <t t-esc="line.type"/>
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <a>
-                                                                <t t-esc="line.pcs"/>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </t>
-                                            </t>
-                                        </tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <t t-set="sum_row" t-value="0"/>
-                                                <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                                    <t t-if="line.type=='lining' " t-set="sum_row" t-value="sum_row+line.pcs"/>
-                                                </t>
-                                                <span>Total : <t t-esc="sum_row"/></span>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <!--condition-->
-                                    <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                        <t t-if="line.type == 'rf'">
-                                            <span class="text-center">Type :
-                                                <t t-esc="line.type"/>
-                                            </span>
-                                        </t>
-                                    </t>
-                                    <table width="100%" class="table table-bordered" style="border-color:black;">
-
-                                        <thead>
-                                            <tr>
-                                                <th class="text-left">Type</th>
-                                                <th class="text-left">Quantity</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                                <t t-if="line.type == 'rf' ">
-                                                    <tr>
-                                                        <td style="text-align:justify">
-                                                            <a>
-                                                                <t t-esc="line.type"/>
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <a>
-                                                                <t t-esc="line.pcs"/>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </t>
-                                            </t>
-                                        </tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <t t-set="sum_row" t-value="0"/>
-                                                <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                                    <t t-if="line.type=='rf' " t-set="sum_row" t-value="sum_row+line.pcs"/>
-                                                </t>
-                                                <span>Total : <t t-esc="sum_row"/></span>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <!--condition-->
-                                    <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                        <t t-if="line.type == 'netto'">
-                                            <span>Type :
-                                                <t t-esc="line.type"/>
-                                            </span>
-                                        </t>
-                                    </t>
-                                    <table width="100%" class="table table-bordered" style="border-color:black;">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-left">Type</th>
-                                                    <th class="text-left">Quantity</th>
-                                                </tr>
-                                            </thead>
-                                        <tbody>
-                                            <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                                <t t-if="line.type == 'netto' ">
-                                                    <tr>
-                                                        <td style="text-align:justify">
-                                                            <a>
-                                                                <t t-esc="line.type"/>
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <a>
-                                                                <t t-esc="line.pcs"/>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </t>
-                                            </t>
-                                        </tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <t t-set="sum_row" t-value="0"/>
-                                                <t t-foreach="o.pattern_cut_line_ids" t-as="line">
-                                                    <t t-if="line.type=='netto' " t-set="sum_row" t-value="sum_row+line.pcs"/>
-                                                </t>
-                                                <span>Total : <t t-esc="sum_row"/></span>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <div class="text-right">
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <strong>------------------------</strong>
+                                        <br/>
+                                        <strong class="text-center">Received By</strong>
+                                    </div>
                                 </div>
                             </div>
                         </div>

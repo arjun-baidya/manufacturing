@@ -15,7 +15,23 @@
         <field name="margin_right">0</field>
         <field name="dpi">96</field>
     </record>
-<!--  ######################################################## -->
+
+    <record id="paperformat_pattern_cut_label" model="report.paperformat">
+        <field name="name">Label</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">80</field>
+        <field name="page_width">90</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">2</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+    <!--  ######################################################## -->
     <record id="report_consumption" model="ir.actions.report">
         <field name="name">Consumption</field>
         <field name="model">merchandising.sheet</field>
@@ -54,7 +70,7 @@
         <field name="report_file">merchandising.report_combination_id</field>
         <field name="binding_model_id" ref="model_merchandising_sheet"/>
         <field name="binding_type">report</field>
-        <field name="paperformat_id" ref="merchandising.paperformat_landscape_combination_report" />
+        <field name="paperformat_id" ref="merchandising.paperformat_landscape_combination_report"/>
     </record>
 
     <record id="report_buyer_estimate" model="ir.actions.report">
@@ -85,6 +101,17 @@
         <field name="report_file">merchandising.report_distribution_id</field>
         <field name="binding_model_id" ref="model_merchandising_sheet"/>
         <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_label" model="ir.actions.report">
+        <field name="name">Label</field>
+        <field name="model">sample.pattern.cut</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">merchandising.report_label</field>
+        <field name="report_file">merchandising.report_label</field>
+        <field name="binding_model_id" ref="model_sample_pattern_cut"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="merchandising.paperformat_pattern_cut_label"/>
     </record>
 
 </odoo>

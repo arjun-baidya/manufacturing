@@ -9,7 +9,8 @@ class WorkSheet(models.Model):
     name = fields.Char('#Master work sheet', required=True, copy=False, readonly=True, index=True,
                        default=lambda self: _('New'))
     master_work_sheet_id = fields.Many2one('mrp.master.worksheet', string="Master Work Sheet")
-    work_center_name = fields.Selection([('cutting', 'Cutting'), ('skyving', 'Skyving'), ('assemble', 'Assemble')])
+    work_center_name = fields.Selection([('cutting', 'Cutting'), ('skyving', 'Skyving'), ('assemble', 'Assemble')],
+                                        default='cutting')
     work_sheet_line_ids = fields.One2many('mrp.work.sheet.line', 'work_sheet_line_id', string="ids")
 
     @api.model

@@ -50,38 +50,40 @@
                                         </thead>
                                         <tbody>
                                             <t t-foreach="o.order_line" t-as="line">
-                                                <tr>
-                                                    <td style="text-align:justify">
-                                                        <a>
-                                                            <t t-esc="line.product_id.name"/>
-                                                        </a>
-                                                    </td>
-                                                    <td style="text-align:justify">
-                                                        <a>
-                                                            <t t-esc="'%.2f'% line.net"/>
-                                                        </a>
-                                                    </td>
-                                                    <td style="text-align:justify">
-                                                        <a>
-                                                            <t t-esc="line.uom.name"/>
-                                                        </a>
-                                                    </td>
-                                                    <td style="text-align:justify">
-                                                        <a>
-                                                            <t t-esc="'%.2f'% line.net_loss"/>
-                                                        </a>
-                                                    </td>
-                                                    <td style="text-align:justify">
-                                                        <a>
-                                                            <t t-esc="line.unit_price"/>
-                                                        </a>
-                                                    </td>
-                                                    <td style="text-align:justify">
-                                                        <a>
-                                                            <t t-esc=" '%.2f'% line.total"/>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                <t t-if="line.product_id_for_report">
+                                                    <tr>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.product_id_for_report"/>
+                                                            </a>
+                                                        </td>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="'%.2f'% line.net_for_report"/>
+                                                            </a>
+                                                        </td>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.uom_for_report"/>
+                                                            </a>
+                                                        </td>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="'%.2f'% line.net_loss_for_report"/>
+                                                            </a>
+                                                        </td>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.unit_price_for_report"/>
+                                                            </a>
+                                                        </td>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc=" '%.2f'% line.total_for_report"/>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </t>
                                             </t>
                                         </tbody>
                                     </table>

@@ -41,26 +41,30 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-left">Material</th>
+                                                <th></th>
                                                 <th class="text-left">Combination</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody >
                                             <t t-foreach="o.order_line" t-as="line">
-                                                <tr>
-                                                    <td style="text-align:justify">
-                                                        <a>
-                                                            <t t-esc="line.part_name.pattern"/>
-                                                        </a>
-                                                    </td>
-                                                    <t t-foreach="line.combination" t-as="mline">
-                                                    <td>
-                                                        <a>
-                                                            <t t-esc="mline.name"/>
-                                                        </a>
-                                                    </td>
+                                                <t t-if="line.combination">
+                                                    <tr>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.product_id.name"/>
+                                                            </a>
+                                                        </td>
                                                         <td style="width:100px"></td>
-                                                    </t>
-                                                </tr>
+                                                        <t t-foreach="line.combination" t-as="mline">
+                                                            <td>
+                                                                <a>
+                                                                    <t t-esc="mline.name"/>
+                                                                </a>
+                                                            </td>
+                                                            <td style="width:100px"></td>
+                                                        </t>
+                                                    </tr>
+                                                </t>
                                             </t>
                                         </tbody>
                                     </table>

@@ -23,6 +23,7 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="merge_duplicate_type" type="object" class="btn-primary" string="Merge"/>
                     <button name="pattern_start_btn" string="Pattern Start" states="draft" type="object" class="btn-primary"/>
                     <button name="sample_pattern_cancel" string="Cancel" states="pattern_start" type="object" class="btn-primary"/>
                     <button name="pattern_end_btn" string="Pattern End" states="pattern_start" type="object" class="btn-primary"/>
@@ -63,10 +64,19 @@
                                     <field name="pcs"/>
                                     <field name="size"/>
                                     <field name="uom"/>
+                                    <field name="type_for_report" invisible="1"/>
+                                    <field name="pcs_for_report" invisible="1"/>
                                     <field name="loss_percentage"/>
                                 </tree>
                             </field>
                         </page>
+                    </notebook>
+                    <notebook>
+                        <group>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_pcs"/>
+                            </group>
+                        </group>
                     </notebook>
                 </sheet>
                     <!-- Add Chatter Form View for  -->
