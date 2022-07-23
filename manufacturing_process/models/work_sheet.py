@@ -9,8 +9,10 @@ class WorkSheet(models.Model):
     name = fields.Char('#Master work sheet', required=True, copy=False, readonly=True, index=True,
                        default=lambda self: _('New'))
     master_work_sheet_id = fields.Many2one('mrp.master.worksheet', string="Master Work Sheet")
-    work_center_name = fields.Selection([('cutting', 'Cutting'), ('skyving', 'Skyving'), ('assemble', 'Assemble')],
-                                        default='cutting')
+    work_center_name = fields.Selection([('cutting', 'Cutting'), ('skyving', 'Skyving'), ('assemble', 'Assemble')], )
+    state = fields.Selection(
+        [('draft', 'Draft'), ('cutting', 'Cutting'), ('skiving', 'Skiving'), ('assemble', 'Assemble'),
+         ('done', 'Done')])
     work_sheet_line_ids = fields.One2many('mrp.work.sheet.line', 'work_sheet_line_id', string="ids")
 
     @api.model
@@ -35,6 +37,39 @@ class WorkSheet(models.Model):
                 lines.append((0, 0, val))
             rec.work_sheet_line_ids = lines
 
+    @api.onchange('work_sheet_line_ids', 'work_center_name')
+    def onchange_type(self):
+        for rec in self:
+            for line in rec.work_sheet_line_ids:
+                if rec.work_center_name == 'cutting':
+                    line.cutting = True
+                    line.skiving = False
+                    line.assemble = False
+                elif rec.work_center_name == 'skyving':
+                    line.skiving = True
+                    line.assemble = False
+                    line.cutting = False
+                elif rec.work_center_name == 'assemble':
+                    line.assemble = True
+                    line.skiving = False
+                    line.cutting = False
+
+    def cutting(self):
+        for rec in self:
+            rec.state = 'cutting'
+
+    def cutting_confirm(self):
+        for rec in self:
+            rec.state = 'skiving'
+
+    def skiving_confirm(self):
+        for rec in self:
+            rec.state = 'assemble'
+
+    def assemble_confirm(self):
+        for rec in self:
+            rec.state = 'done'
+
 
 class WorkSheetLine(models.Model):
     _name = 'mrp.work.sheet.line'
@@ -44,8 +79,11 @@ class WorkSheetLine(models.Model):
     part_name = fields.Char(string="Part Name")
     cutting_pending = fields.Integer(string="Cutting Pending")
     cutting_done = fields.Integer(string="Cutting Done")
+    cutting = fields.Boolean()
     skiving_pending = fields.Integer(string="Skiving Pending")
     skiving_done = fields.Integer(string="Skiving Done")
+    skiving = fields.Boolean()
     assemble_pending = fields.Integer(string="Assemble Pending")
     assemble_done = fields.Integer(string="Assemble Done")
+    assemble = fields.Boolean()
     work_sheet_line_id = fields.Many2one('mrp.work.sheet', string="id")
