@@ -8,7 +8,7 @@
         This is custom merchandising Info
     """,
     'summary': ' ',
-    'website': 'https://www.odoo.com/page/survey',
+    'website': 'https://www.pisoftwareltd.com/',
     'depends': [
             'sale_management',
             'sale',
@@ -19,18 +19,9 @@
     'data': [
         'security/ir.model.access.csv',
         'data/merchandising_sequence.xml',
-        'views/sample_order_sheet.xml',
         'views/merchandising_sheet.xml',
-        'views/bom_inherit.xml',
-        'views/sample_document_register.xml',
         'views/pattern_cut.xml',
-        'views/pattern_register.xml',
-        'views/cutting_skyving.xml',
-        'views/manufacturing_inherit.xml',
-        'views/master_worksheet.xml',
-        'views/work_sheet.xml',
         'report/hand_consumption.xml',
-        'report/consumption.xml',
         'report/pattern_cut_report.xml',
         'report/combination_report.xml',
         'report/buyer_estimate_report.xml',

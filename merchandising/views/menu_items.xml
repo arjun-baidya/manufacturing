@@ -9,21 +9,10 @@
 	<!--	merchandising configure manu-->
     <menuitem id="menu_merchandising_configuration" name="Configuration" parent="merchandising.merchandising_sheet_root" sequence="2" action="merchandising.action_merchandising_sheet"/>
 
-	<!--	sample document register manu -->
-    <menuitem id="sample_document_menu" name="Document Register" parent="merchandising.menu_merchandising_configuration" action="merchandising.action_sample_document_register"/>
-
-	<!--pattern register manu -->
-	<menuitem id="pattern_register_menu" name="Pattern Register" parent="merchandising.menu_merchandising_configuration" sequence="4" action="merchandising.action_pattern_register"/>
-
 	<!--	pattern cut manu -->
     <menuitem id="sample_pattern_cut_menu" name="Pattern Cutting" parent="merchandising.menu_merchandising_configuration" action="merchandising.action_sample_pattern_cut"/>
 
-	<!-- sample cutting skyving manu-->
-	<menuitem id="sample_cutting_skyving_menu" name="Cutting Skyving" parent="merchandising.menu_merchandising_configuration" sequence="4" action="merchandising.action_sample_cutting_skyving"/>
 
-    <menuitem id="master_worksheet_menu" name="Master Work Sheet" parent="mrp.menu_mrp_production_action" sequence="4" action="merchandising.action_master_work_sheet"/>
-
-    <menuitem id="worksheet_menu" name="Work Sheet" parent="mrp.menu_mrp_production_action" sequence="4" action="merchandising.action_work_sheet"/>
 
 
 </odoo>

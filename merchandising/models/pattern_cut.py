@@ -99,17 +99,17 @@ class SamplePatternCut(models.Model):
         else:
             self.pattern_cut_duration = 0.0
 
-    def action_view_pattern_cut(self):
-        res = self.env.ref('merchandising.sample_pattern_cut_form_view')
-        result = {'name': _('Pattern Cut'),
-                  'view_type': 'form',
-                  'view_mode': 'form',
-                  'view_id': res and res.id or False,
-                  'res_model': 'sample.pattern.cut',
-                  'type': 'ir.actions.act_window',
-                  'target': 'current',
-                  'res_id': self.id}
-        return result
+    # def action_view_pattern_cut(self):
+    #     res = self.env.ref('merchandising.sample_pattern_cut_form_view')
+    #     result = {'name': _('Pattern Cut'),
+    #               'view_type': 'form',
+    #               'view_mode': 'form',
+    #               'view_id': res and res.id or False,
+    #               'res_model': 'sample.pattern.cut',
+    #               'type': 'ir.actions.act_window',
+    #               'target': 'current',
+    #               'res_id': self.id}
+    #     return result
 
 
 class PatternCutLine(models.Model):

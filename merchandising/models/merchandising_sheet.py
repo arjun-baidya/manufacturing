@@ -7,14 +7,9 @@ class MerchandisingSheet(models.Model):
     _description = "merchandising sheet"
     _rec_name = 'reference'
 
-    def get_manufacturing_order(self):
-        data = self.env['mrp.production'].search([('md_sheet_id', '=', self.reference)])
-        for rec in data:
-            print('data', rec.name)
-
     reference = fields.Char('#MD NO', required=True, copy=False, readonly=True, index=True,
                             default=lambda self: _('New'))
-    customer_name = fields.Char(string="Customer Name")
+    customer_name = fields.Many2one('res.partner', string="Customer Name")
     product = fields.Many2one('product.product', string="Product")
     series_name = fields.Char(string="Series Name")
     style_no = fields.Char(string="Style No")
@@ -25,7 +20,7 @@ class MerchandisingSheet(models.Model):
     merchandiser_name = fields.Many2one('hr.employee', string="Merchandiser Maker Name")
     sample_lead_time = fields.Date(string="Sample Lead time")
     instruction = fields.Char(string="Instruction")
-    manufacturing_order_no = fields.Many2one('mrp.production', string="Manufacturing order No ",)
+    manufacturing_order_no = fields.Many2one('mrp.production', string="Manufacturing order No ", )
     state = fields.Selection([
         ('draft', 'Draft'),
         ('confirm', 'Confirm'),
@@ -35,27 +30,15 @@ class MerchandisingSheet(models.Model):
         ('pattern_register', 'Pattern Register'),
         ('sample_cutting_skyving', 'Cutting Skyving'),
     ], default='draft', track_visibility='onchange')
-    # link for sample.document.register model
-    document_register_ids = fields.One2many('sample.document.register', 'merchandising_sheet_id',
-                                            string='Document Register')
+
     order_line = fields.One2many('merchandising.sheet.line', 'order_id', string='Order Lines')
+    merchandising_duplicate_line_ids = fields.One2many('merchandising.sheet.line.duplicate',
+                                                       'merchandising_duplicate_line_id', string="ids")
     pattern_cut_line_ids = fields.One2many('merchandising.sheet.line', 'order_id', string="Pattern Cut line")
-
-    # link for mrp.bom model
-    bom_ids = fields.One2many('mrp.bom', 'merchandising_sheet_id', string='BOM')
-
-    # link for mrp.production model
-    manufacturing_order_ids = fields.One2many('stock.move', 'merchandising_sheet_id', string='manufacturing order')
 
     # link for sample.pattern.cut model
     pattern_cut_ids = fields.One2many('sample.pattern.cut', 'merchandising_sheet_id',
                                       string='Pattern Cut')
-    # link for pattern.register
-    pattern_register_ids = fields.One2many('pattern.register', 'merchandising_sheet_id',
-                                           string='Pattern register')
-    # link for sample_cutting_skyving
-    sample_cutting_skyving_ids = fields.One2many('sample.cutting.skyving', 'merchandising_sheet_id',
-                                                 string='Pattern register')
 
     @api.model
     def create(self, vals):
@@ -72,123 +55,29 @@ class MerchandisingSheet(models.Model):
         for rec in self:
             rec.state = 'confirm'
 
-    # go to sample.document.register model button
-    def sample_document_register_load(self):
-        for rec in self:
-            rec.state = 'sample_document_register'
-        # ref_obj = self.env['sample.document.register']
-        # ref_obj.create(values)
-        # so_id = self.env['sample.document.register'].search([('customer_name', '=', self.customer_name)]).id
-        res = self.env.ref('merchandising.sample_document_register_form_view')
-        result = {'name': _('Document Register'),
-                  'view_type': 'form',
-                  'view_mode': 'form',
-                  'view_id': res and res.id or False,
-                  'res_model': 'sample.document.register',
-                  'context': {
-                      'merchandising_sheet_id': self.id,
-                  },
-                  # 'res_id': self.id,
-                  'type': 'ir.actions.act_window',
-                  'target': 'current'}
-        self.env['merchandising.sheet'].search([('id', '=', self.id)])
-        return result
-
-    # for bom
-    def bom_load(self):
-        for rec in self:
-            rec.state = 'bom'
-        res = self.env.ref('mrp.mrp_bom_form_view')
-        result = {'name': _('bom'),
-                  'view_type': 'form',
-                  'view_mode': 'form',
-                  'view_id': res and res.id or False,
-                  'res_model': 'mrp.bom',
-                  'context': {
-                      'merchandising_sheet_id': self.id,
-                  },
-                  'type': 'ir.actions.act_window',
-                  'target': 'current'}
-        self.env['merchandising.sheet'].search([('id', '=', self.id)])
-        return result
-
-    # manufacturing order
-    def manufacturing_order_load(self):
-        for rec in self:
-            rec.state = 'bom'
-        res = self.env.ref('mrp.mrp_production_form_view')
-        result = {'name': _('Manufacturing order'),
-                  'view_type': 'form',
-                  'view_mode': 'form',
-                  'view_id': res and res.id or False,
-                  'res_model': 'mrp.production',
-                  'context': {
-                      'merchandising_sheet_id': self.id,
-                  },
-                  'type': 'ir.actions.act_window',
-                  'target': 'current'}
-        self.env['merchandising.sheet'].search([('id', '=', self.id)])
-        return result
-
-    # go to sample.pattern.cut model button
-    def sample_pattern_cut_load(self):
-        for rec in self:
-            rec.state = 'sample_pattern_cut'
-        res = self.env.ref('merchandising.sample_pattern_cut_form_view')
-        result = {'name': _('Pattern Cut'),
-                  'view_type': 'form',
-                  'view_mode': 'form',
-                  'view_id': res and res.id or False,
-                  'res_model': 'sample.pattern.cut',
-                  'context': {
-                      'merchandising_sheet_id': self.id,
-                  },
-                  # 'res_id': self.id,
-                  'type': 'ir.actions.act_window',
-                  'target': 'current'}
-        self.env['merchandising.sheet'].search([('id', '=', self.id)])
-        return result
-
-    # go to pattern.register model button
-    def sample_pattern_register_load(self):
-        for rec in self:
-            rec.state = 'pattern_register'
-        res = self.env.ref('merchandising.pattern_register_form_view')
-        result = {'name': _('Pattern Cut'),
-                  'view_type': 'form',
-                  'view_mode': 'form',
-                  'view_id': res and res.id or False,
-                  'res_model': 'pattern.register',
-                  'context': {
-                      'merchandising_sheet_id': self.id,
-                  },
-                  # 'res_id': self.id,
-                  'type': 'ir.actions.act_window',
-                  'target': 'current'}
-        self.env['merchandising.sheet'].search([('id', '=', self.id)])
-        return result
-
-    # go to sample.cutting.skyving model button
-    def sample_cutting_skyving_load(self):
-        for rec in self:
-            rec.state = 'sample_cutting_skyving'
-        res = self.env.ref('merchandising.sample_cutting_skyving_form_view')
-        result = {'name': _('Cutting Skyving'),
-                  'view_type': 'form',
-                  'view_mode': 'form',
-                  'view_id': res and res.id or False,
-                  'res_model': 'sample.cutting.skyving',
-                  'context': {
-                      'merchandising_sheet_id': self.id,
-                  },
-                  # 'res_id': self.id,
-                  'type': 'ir.actions.act_window',
-                  'target': 'current'}
-        self.env['merchandising.sheet'].search([('id', '=', self.id)])
-        return result
+    # def merge_duplicate_materials(self):
+    #     if self.order_line:
+    #         for line in self.order_line:
+    #             if line.id in self.order_line.ids:
+    #                 line_ids = self.order_line.filtered(lambda m: m.product_id.id == line.product_id.id)
+    #                 net_for_report = 0.0
+    #                 total_for_report = 0.0
+    #                 for qty in line_ids:
+    #                     net_for_report += qty.net
+    #                     total_for_report += qty.total
+    #                 line_ids[0].write({
+    #                     'product_id_for_report': line_ids[0].product_id.name,
+    #                     'net_for_report': net_for_report,
+    #                     'uom_for_report': line_ids[0].uom.name,
+    #                     'net_loss_for_report': line_ids[0].net_loss,
+    #                     'unit_price_for_report': line_ids[0].unit_price,
+    #                     'total_for_report': total_for_report,
+    #                 })
+    #                 # line_ids[1:].unlink()
 
     def merge_duplicate_materials(self):
         if self.order_line:
+            lines = [(5, 0, 0)]
             for line in self.order_line:
                 if line.id in self.order_line.ids:
                     line_ids = self.order_line.filtered(lambda m: m.product_id.id == line.product_id.id)
@@ -197,15 +86,29 @@ class MerchandisingSheet(models.Model):
                     for qty in line_ids:
                         net_for_report += qty.net
                         total_for_report += qty.total
+                    val = {
+                        'product_id_for_report': line_ids[0].product_id.name,
+                        'net_for_report': net_for_report,
+                        'uom_for_report': line_ids[0].uom.name,
+                        'net_loss_for_report': line_ids[0].net_loss,
+                        'unit_price_for_report': line_ids[0].unit_price,
+                        'total_for_report': total_for_report,
+                        'arrange_by': '',
+                        'supplier': '',
+                    }
+                lines.append((0, 0, val))
+                self.merchandising_duplicate_line_ids = lines
+                self.merge_duplicate_materials_duplicate()
+
+    def merge_duplicate_materials_duplicate(self):
+        if self.merchandising_duplicate_line_ids:
+            for line in self.merchandising_duplicate_line_ids:
+                if line.id in self.merchandising_duplicate_line_ids.ids:
+                    line_ids = self.merchandising_duplicate_line_ids.filtered(lambda m: m.product_id_for_report == line.product_id_for_report)
                     line_ids[0].write({
-                                       'product_id_for_report': line_ids[0].product_id.name,
-                                       'net_for_report': net_for_report,
-                                       'uom_for_report': line_ids[0].uom.name,
-                                       'net_loss_for_report': line_ids[0].net_loss,
-                                       'unit_price_for_report': line_ids[0].unit_price,
-                                       'total_for_report': total_for_report,
-                                       })
-                    # line_ids[1:].unlink()
+                        'product_id_for_report': line_ids[0].product_id_for_report,
+                    })
+                    line_ids[1:].unlink()
 
 
 class MerchandisingSheetLine(models.Model):
@@ -218,6 +121,7 @@ class MerchandisingSheetLine(models.Model):
     product_id_for_report = fields.Char()
     pattern = fields.Many2one('sample.pattern.cut', string="Pattern")
     part_name = fields.Many2one('pattern.cut.line', string="Part Name")
+    type = fields.Selection([('leather', 'Leather'), ('lining', 'Lining'), ('rf', 'Reinforcement'), ('zipper', 'Zipper')], required=True)
     combination = fields.Many2many('product.product', string="Combination")
     length = fields.Float(string="Length")
     width = fields.Float(string="Width")
@@ -239,8 +143,6 @@ class MerchandisingSheetLine(models.Model):
     unit_price_for_report = fields.Float()
     total = fields.Float(string="Total")
     total_for_report = fields.Float()
-    arrange_by = fields.Many2one('res.partner', string="Arrange-By")
-    supplier = fields.Many2one('res.partner', string="Supplier", help="Maker")
 
     ##################
     order_id = fields.Many2one('merchandising.sheet', string='Order Reference')
@@ -308,3 +210,18 @@ class MerchandisingSheetLine(models.Model):
         for rec in self:
             percentage = (rec.net * rec.purchase_loss) / 100
             rec.net_purchase = percentage + rec.net
+
+
+class MerchandisingSheetLineDuplicate(models.Model):
+    _name = 'merchandising.sheet.line.duplicate'
+    _description = "Duplicate merchandising line"
+
+    product_id_for_report = fields.Char(string="Materials")
+    uom_for_report = fields.Char(string="UOM")
+    net_for_report = fields.Float(string="Net")
+    net_loss_for_report = fields.Float(string="Net Loss")
+    unit_price_for_report = fields.Float(string="Unit Price")
+    total_for_report = fields.Float(string="Total")
+    arrange_by = fields.Many2one('res.partner', string="Arrange-By")
+    supplier = fields.Many2one('res.partner', string="Supplier", help="Maker")
+    merchandising_duplicate_line_id = fields.Many2one('merchandising.sheet', string="id")

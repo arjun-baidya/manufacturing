@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    Tree view
     <record id="merchandising_sheet_tree_view" model="ir.ui.view">
         <field name="name">merchandising.sheet.tree.view</field>
         <field name="model">merchandising.sheet</field>
@@ -17,6 +18,7 @@
             </tree>
         </field>
     </record>
+    End Tree View
 
     <!-- Form View for  -->
     <record id="merchandising_sheet_form_view" model="ir.ui.view">
@@ -25,26 +27,9 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="merge_duplicate_materials" string="Merge Buyer Estimate" class="btn-primary" type="object"/>
-                    <button name="get_manufacturing_order" string="Manufac"  type="object" class="btn-primary"/>
+                    <button name="merge_duplicate_materials" string="Merge Buyer Estimate" class="btn-primary"
+                            type="object"/>
                     <button name="md_sheet_confirm" string="Confirm" states="draft" type="object" class="btn-primary"/>
-                    <!--                    <button name="merchandising.action_sample_pattern_cut" string="Pattern Cut" type="action" class="oe_highlight" />-->
-                    <!--                    <button name="wizard_pattern_cut" string="Pattern Cut"  type="object" class="oe_highlight" />-->
-                    <button name="sample_pattern_cut_load" string="Sample Pattern Cut" states="bom"
-                            attrs="{'invisible':['|',('state','=','sample_pattern_cut')]}" type="object"
-                            class="btn-primary"/>
-                    <button name="sample_document_register_load" string="Sample Document Register" states="confirm"
-                            attrs="{'invisible':['|',('state','=','sample_document_register')]}" type="object"
-                            class="btn-primary"/>
-                    <button name="bom_load" string="BOM" states="sample_document_register"
-                            type="object" class="btn-primary"/>
-                    <button name="manufacturing_order_load" string="Manufacturing Order"
-                            states="sample_document_register"
-                            type="object" class="btn-primary"/>
-                    <button name="sample_pattern_register_load" string="Pattern Register" states="sample_pattern_cut"
-                            type="object" class="btn-primary"/>
-                    <button name="sample_cutting_skyving_load" string="Cutting Skyving" states="pattern_register"
-                            type="object" class="btn-primary"/>
                     <field name="state" widget="statusbar" options="{'clickable': '1'}"
                            statusbar_visible="draft,confirm,sample_document_register,bom,sample_pattern_cut,pattern_register,sample_cutting_skyving"/>
                 </header>
@@ -74,7 +59,7 @@
                     </group>
 
                     <notebook>
-                        <page string="Products">
+                        <page string="Pattern">
                             <field name="order_line" widget="one2many">
                                 <tree>
                                     <field name="product_id"/>
@@ -87,134 +72,55 @@
                                     <field name="uom"/>
                                     <field name="net"/>
                                     <field name="factory_loss"/>
-                                    <field name="net_loss"/>
-                                </tree>
-<!--                                <form>-->
-<!--                                    <group>-->
-<!--                                        <group>-->
-<!--                                            <field name="product_category"/>-->
-<!--                                            <field name="product_id"/>-->
-<!--                                            <field name="pattern"/>-->
-<!--                                            <field name="part_name"/>-->
-<!--                                            <field name="length"/>-->
-<!--                                            <field name="width"/>-->
-<!--                                            <field name="pcs"/>-->
-<!--                                            <field name="size"/>-->
-<!--                                            <field name="uom"/>-->
-<!--                                        </group>-->
-<!--                                        <group>-->
-<!--                                            <field name="net"/>-->
-<!--                                            <field name="factory_loss"/>-->
-<!--                                            <field name="net_loss"/>-->
-<!--                                        </group>-->
-<!--                                    </group>-->
-<!--                                </form>-->
-                            </field>
-                        </page>
-                        <page string="Consumption">
-                            <field name="order_line" widget="one2many">
-                                <tree editable="bottom">
-                                    <field name="product_category"/>
-                                    <field name="product_id"/>
-                                    <field name="combination" widget="many2many_tags"/>
-                                    <field name="net"/>
                                     <field name="buyer_loss"/>
                                     <field name="purchase_loss"/>
+                                    <field name="net_loss"/>
                                     <field name="net_buyer"/>
                                     <field name="net_purchase"/>
                                     <field name="bom_no"/>
-                                    <field name="unit_price"/>
-                                    <field name="total"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="product_category"/>
+                                            <field name="product_id"/>
+                                            <field name="pattern"/>
+                                            <field name="part_name"/>
+                                            <field name="type" />
+                                            <field name="combination" widget="many2many_tags"/>
+                                            <field name="length"/>
+                                            <field name="width"/>
+                                            <field name="pcs"/>
+                                            <field name="size"/>
+                                            <field name="uom"/>
+                                        </group>
+                                        <group>
+                                            <field name="net"/>
+                                            <field name="factory_loss"/>
+                                            <field name="buyer_loss"/>
+                                            <field name="purchase_loss"/>
+                                            <field name="net_loss"/>
+                                            <field name="net_buyer"/>
+                                            <field name="net_purchase"/>
+                                            <field name="bom_no"/>
+                                            <field name="unit_price"/>
+                                            <field name="total"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Consumption">
+                            <field name="merchandising_duplicate_line_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="product_id_for_report"/>
+                                    <field name="uom_for_report"/>
+                                    <field name="net_for_report"/>
+                                    <field name="net_loss_for_report"/>
+                                    <field name="unit_price_for_report"/>
+                                    <field name="total_for_report"/>
                                     <field name="arrange_by"/>
                                     <field name="supplier"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Document Registers">
-                            <field name="document_register_ids" widget="one2many">
-                                <tree create="false" delete="false" editable="bottom">
-                                    <field name="serial_num"/>
-                                    <field name="color"/>
-                                    <field name="register_date"/>
-                                    <field name="quantity"/>
-                                    <field name="document_type"/>
-                                    <field name="receiver_name"/>
-                                    <button name="action_view_document_register" string="View" type="object"
-                                            icon="fa-search-plus"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="BOM">
-                            <field name="bom_ids" widget="one2many">
-                                <tree create="false" delete="false" editable="bottom">
-                                    <field name="company_id" groups="base.group_multi_company"
-                                           options="{'no_create': True, 'no_open': True}"/>
-                                    <field name="product_tmpl_id"/>
-                                    <field name="product_id"/>
-                                    <field name="type"/>
-                                    <button name="action_view_bom" string="View" type="object" icon="fa-search-plus"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Manufacturing Order">
-                            <field name="manufacturing_order_ids" widget="one2many">
-                                <tree create="false" delete="false" editable="bottom">
-                                    <field name="company_id" groups="base.group_multi_company"
-                                           options="{'no_create': True, 'no_open': True}" invisible="1"/>
-                                    <field name="product_id" context="{'default_detailed_type': 'product'}"
-                                           default_focus="1"/>
-                                    <field name="state" invisible="1"/>
-                                    <field name="product_uom_category_id" invisible="1"/>
-                                    <field name="product_uom_qty"/>
-                                    <field name="product_uom"/>
-                                    <field name="forecast_availability"/>
-                                    <field name="quantity_done"/>
-                                    <button name="action_view_manufacturing" string="View" type="object"
-                                            icon="fa-search-plus"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Pattern Cut">
-                            <field name="pattern_cut_ids" widget="one2many">
-                                <tree create="false" delete="false" editable="bottom">
-                                    <field name="received_name"/>
-                                    <field name="received_date"/>
-                                    <field name="target_date"/>
-                                    <button name="action_view_pattern_cut" string="View" type="object"
-                                            icon="fa-search-plus"/>
-                                </tree>
-                            </field>
-                        </page>
-
-                        <page string="Pattern Register">
-                            <field name="pattern_register_ids" widget="one2many">
-                                <tree create="false" delete="false" editable="bottom">
-                                    <field name="serial_num"/>
-                                    <field name="series_name"/>
-                                    <field name="style_no"/>
-                                    <field name="customer_name"/>
-                                    <field name="receiver_name"/>
-                                    <field name="date"/>
-                                    <button name="action_view_pattern_register" string="View" type="object"
-                                            icon="fa-search-plus"/>
-                                </tree>
-                            </field>
-                        </page>
-
-                        <page string="Cutting Skyving">
-                            <field name="sample_cutting_skyving_ids" widget="one2many">
-                                <tree create="false" delete="false" editable="bottom">
-                                    <field name="md_sheet_no"/>
-                                    <field name="total_sample_qty"/>
-                                    <field name="sample_cutting_man"/>
-                                    <field name="cutting_start_time"/>
-                                    <field name="cutting_end_time"/>
-                                    <field name="cutting_time_result"/>
-                                    <field name="skyving_start_time"/>
-                                    <field name="skyving_end_time"/>
-                                    <field name="skyving_time_result"/>
-                                    <button name="action_view_cutting_skyving" string="View" type="object"
-                                            icon="fa-search-plus"/>
                                 </tree>
                             </field>
                         </page>

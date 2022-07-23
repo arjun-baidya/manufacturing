@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="master_worksheet_menu" name="Master Work Sheet" parent="mrp.menu_mrp_production_action" sequence="4" action="manufacturing_process.action_master_work_sheet"/>
+
+    <menuitem id="worksheet_menu" name="Work Sheet" parent="mrp.menu_mrp_production_action" sequence="4" action="manufacturing_process.action_work_sheet"/>
+
+
+</odoo>

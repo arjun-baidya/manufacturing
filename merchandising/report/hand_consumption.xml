@@ -30,6 +30,11 @@
                                     </div>
                                     <br/>
                                     <br/>
+                                    <t t-foreach="o.order_line" t-as="line">
+                                        <t t-if="line.type=='leather' ">
+                                            <p><t t-esc="line.type" /></p>
+                                        </t>
+                                    </t>
                                     <table width="100%" class="table table-bordered" style="border-color:black;">
                                         <thead>
                                             <tr>
@@ -48,7 +53,7 @@
                                         </thead>
                                         <tbody>
                                             <t t-foreach="o.order_line" t-as="line">
-<!--                                                <t t-if="line.product_id.name == 'rf' ">-->
+                                                <t t-if="line.type == 'leather' ">
                                                     <tr>
                                                         <td style="text-align:justify">
                                                             <a>
@@ -106,7 +111,264 @@
                                                             </a>
                                                         </td>
                                                     </tr>
-<!--                                                </t>-->
+                                                </t>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <t t-foreach="o.order_line" t-as="line">
+                                        <t t-if="line.type=='lining' ">
+                                            <p>Lining</p>
+                                        </t>
+                                    </t>
+                                    <table width="100%" class="table table-bordered" style="border-color:black;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Material</th>
+                                                <th class="text-left">Part Name</th>
+                                                <th class="text-left">Length</th>
+                                                <th class="text-left">Width</th>
+                                                <th class="text-left">Pcs</th>
+                                                <th class="text-left">Size</th>
+                                                <th class="text-left">Net</th>
+                                                <th class="text-left">Factory Loss</th>
+                                                <th class="text-left">Buyer Loss</th>
+                                                <th class="text-left">Net factory</th>
+                                                <th class="text-left">Net buyer</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.order_line" t-as="line">
+                                                <t t-if="line.type == 'lining' ">
+                                                    <tr>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.product_id.name"/>
+                                                            </a>
+                                                        </td>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.part_name.pattern"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.length"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.width"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.pcs"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.size"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="'%.2f'% line.net"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'% line.factory_loss"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'% line.buyer_loss"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'%  line.net_loss"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'%  line.net_buyer"/>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                    <t t-foreach="o.order_line" t-as="line">
+                                        <t t-if="line.type=='rf' ">
+                                            <p>Reinforcement</p>
+                                        </t>
+                                    </t>
+                                    <table width="100%" class="table table-bordered" style="border-color:black;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Material</th>
+                                                <th class="text-left">Part Name</th>
+                                                <th class="text-left">Length</th>
+                                                <th class="text-left">Width</th>
+                                                <th class="text-left">Pcs</th>
+                                                <th class="text-left">Size</th>
+                                                <th class="text-left">Net</th>
+                                                <th class="text-left">Factory Loss</th>
+                                                <th class="text-left">Buyer Loss</th>
+                                                <th class="text-left">Net factory</th>
+                                                <th class="text-left">Net buyer</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.order_line" t-as="line">
+                                                <t t-if="line.type == 'rf' ">
+                                                    <tr>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.product_id.name"/>
+                                                            </a>
+                                                        </td>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.part_name.pattern"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.length"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.width"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.pcs"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.size"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="'%.2f'% line.net"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'% line.factory_loss"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'% line.buyer_loss"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'%  line.net_loss"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'%  line.net_buyer"/>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <t t-foreach="o.order_line[0]" t-as="line">
+                                        <t t-if="line.type=='zipper' ">
+                                            <p>Zipper</p>
+                                        </t>
+                                    </t>
+                                    <table width="100%" class="table table-bordered" style="border-color:black;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Material</th>
+                                                <th class="text-left">Part Name</th>
+                                                <th class="text-left">Length</th>
+                                                <th class="text-left">Width</th>
+                                                <th class="text-left">Pcs</th>
+                                                <th class="text-left">Size</th>
+                                                <th class="text-left">Net</th>
+                                                <th class="text-left">Factory Loss</th>
+                                                <th class="text-left">Buyer Loss</th>
+                                                <th class="text-left">Net factory</th>
+                                                <th class="text-left">Net buyer</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.order_line" t-as="line">
+                                                <t t-if="line.type == 'zipper' ">
+                                                    <tr>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.product_id.name"/>
+                                                            </a>
+                                                        </td>
+                                                        <td style="text-align:justify">
+                                                            <a>
+                                                                <t t-esc="line.part_name.pattern"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.length"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.width"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.pcs"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="line.size"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc="'%.2f'% line.net"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'% line.factory_loss"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'% line.buyer_loss"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'%  line.net_loss"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a>
+                                                                <t t-esc=" '%.2f'%  line.net_buyer"/>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </t>
                                             </t>
                                         </tbody>
                                     </table>

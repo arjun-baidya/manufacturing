@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mrp_master_worksheet,access.mrp.master.worksheet,model_mrp_master_worksheet,,1,1,1,1
+access_mrp_master_worksheet_line,access.mrp.master.worksheet.line,model_mrp_master_worksheet_line,,1,1,1,1
+
+access_mrp_work_sheet,access_mrp_work_sheet,model_mrp_work_sheet,,1,1,1,1
+access_mrp_work_sheet_line,access_mrp_work_sheet_line,model_mrp_work_sheet_line,,1,1,1,1
+

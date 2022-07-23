@@ -32,15 +32,6 @@
         <field name="dpi">90</field>
     </record>
     <!--  ######################################################## -->
-    <record id="report_consumption" model="ir.actions.report">
-        <field name="name">Consumption</field>
-        <field name="model">merchandising.sheet</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">merchandising.report_consumption_form</field>
-        <field name="report_file">merchandising.report_consumption_form</field>
-        <field name="binding_model_id" ref="model_merchandising_sheet"/>
-        <field name="binding_type">report</field>
-    </record>
 
     <record id="report_hand_consumption" model="ir.actions.report">
         <field name="name">Hand Consumption</field>
