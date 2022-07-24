@@ -21,7 +21,7 @@ class SamplePatternCut(models.Model):
     received_name = fields.Many2one('hr.employee', string="Receiver")
     series_name = fields.Char(string="Series Name")
     style_no = fields.Char(string="Style No")
-    customer_name = fields.Char(string="Customer Name")
+    customer_name = fields.Many2one('res.partner', string="Customer Name")
     received_date = fields.Date(string="Received Date")
     pattern_qty = fields.Integer(string="Pattern Qty")
     target_date = fields.Date(string="Target Date")
@@ -49,9 +49,13 @@ class SamplePatternCut(models.Model):
                 if line.id in self.pattern_cut_line_ids.ids:
                     line_ids = self.pattern_cut_line_ids.filtered(lambda m: m.type == line.type)
                     quantity = 0
+                    id_count = 0
                     for qty in line_ids:
                         quantity += qty.pcs
+                        if qty.id:
+                            id_count += 1
                     line_ids[0].write({'pcs_for_report': quantity,
+                                       'id_count': id_count,
                                        'type_for_report': line_ids[0].type})
                     # line_ids[1:].unlink()
 
@@ -95,7 +99,7 @@ class SamplePatternCut(models.Model):
     def _compute_pattern_duration(self):
         if self.end_time:
             tot_sec = (self.end_time - self.start_time).total_seconds()
-            self.pattern_cut_duration = round(tot_sec / 60)
+            self.pattern_cut_duration = round(tot_sec / 3600)
         else:
             self.pattern_cut_duration = 0.0
 
@@ -124,13 +128,13 @@ class PatternCutLine(models.Model):
     pcs = fields.Integer(string="PCS")
     size = fields.Integer(string="Size")
     uom = fields.Many2one('uom.uom', string="UOM")
-    loss_percentage = fields.Float(string="Loss %")
+    # loss_percentage = fields.Float(string="Loss %")
     # for report some extra field initialize
     type_for_report = fields.Char()
     pcs_for_report = fields.Integer()
+    id_count = fields.Integer()
     ###################################
     patten_cut_id = fields.Many2one('sample.pattern.cut', string="pattern cut id")
-
 
 
 

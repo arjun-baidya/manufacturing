@@ -4,23 +4,24 @@ from odoo import fields, models, api, _
 class BomInherit(models.Model):
     _inherit = 'mrp.bom'
     # _rec_name = 'name'
-    _parent_name = 'name'
+    _parent_name = 'name_id'
 
     md_sheet_id = fields.Many2one('merchandising.sheet', string="MD id")
-    name = fields.Char('BOM', required=True, readonly=True, index=True, default=lambda self: _('New'))
+    name_id = fields.Char('BOM', required=True, readonly=True, index=True, default=lambda self: _('New'))
     net_qty = fields.Selection([('net_loss', "Net Loss"), ('net_buyer', "Net Buyer"), ('net_purchase', "Net Purchase")])
 
-    # def name_get(self):
-    #     result = []
-    #     for rec in self:
-    #         name = rec.name
-    #         result.append((rec.name, name))
-    #     return result
+    def name_get(self):
+        result = []
+        for rec in self:
+            # name = rec.name_id
+            result.append((rec.id, str(rec.name_id)))
+            # result.append((rec.name_id, name))
+        return result
 
     @api.model
     def create(self, vals):
-        if vals.get('name', _('New')) == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('bom.sequence') or _('New')
+        if vals.get('name_id', _('New')) == _('New'):
+            vals['name_id'] = self.env['ir.sequence'].next_by_code('bom.sequence') or _('New')
         result = super(BomInherit, self).create(vals)
         return result
 

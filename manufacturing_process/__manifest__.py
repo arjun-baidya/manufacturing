@@ -19,6 +19,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         'data/manufacturing_sequence.xml',
         'views/bom_inherit.xml',
         'views/manufacturing_inherit.xml',

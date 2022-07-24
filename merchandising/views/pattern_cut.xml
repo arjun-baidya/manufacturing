@@ -57,6 +57,7 @@
                         <page string="Details">
                             <field name="pattern_cut_line_ids" widget="one2many">
                                 <tree editable="bottom">
+                                    <field name="id"/>
                                     <field name="pattern"/>
                                     <field name="type"/>
                                     <field name="length"/>
@@ -66,7 +67,7 @@
                                     <field name="uom"/>
                                     <field name="type_for_report" invisible="1"/>
                                     <field name="pcs_for_report" invisible="1"/>
-                                    <field name="loss_percentage"/>
+                                    <field name="id_count" invisible="1"/>
                                 </tree>
                             </field>
                         </page>

@@ -1,9 +1,9 @@
-from odoo import fields, models, api, _
+from odoo import fields, models, api, _, SUPERUSER_ID
 
 
 class WorkSheet(models.Model):
     _name = 'mrp.work.sheet'
-
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Work Sheet"
 
     name = fields.Char('#Master work sheet', required=True, copy=False, readonly=True, index=True,
@@ -14,6 +14,7 @@ class WorkSheet(models.Model):
         [('draft', 'Draft'), ('cutting', 'Cutting'), ('skiving', 'Skiving'), ('assemble', 'Assemble'),
          ('done', 'Done')])
     work_sheet_line_ids = fields.One2many('mrp.work.sheet.line', 'work_sheet_line_id', string="ids")
+    current_user = fields.Many2one('res.users', 'Current User', default=lambda self: self.env.user)
 
     @api.model
     def create(self, vals):
@@ -55,8 +56,19 @@ class WorkSheet(models.Model):
                     line.cutting = False
 
     def cutting(self):
-        for rec in self:
-            rec.state = 'cutting'
+        for record in self:
+            # Send Group Notification
+            partner_ids = []
+            grp = self.env.ref('manufacturing_process.manufacturing_process_user_access')
+            for u in grp.users:
+                print(u.partner_id.name)
+                if u.partner_id:
+                    partner_ids.append(u.partner_id.id)
+
+            if partner_ids:
+                record.message_post(body="You have been assigned to next step.",
+                                    partner_ids=partner_ids)
+            record.state = 'cutting'
 
     def cutting_confirm(self):
         for rec in self:

@@ -9,18 +9,17 @@ class MerchandisingSheet(models.Model):
 
     reference = fields.Char('#MD NO', required=True, copy=False, readonly=True, index=True,
                             default=lambda self: _('New'))
-    customer_name = fields.Many2one('res.partner', string="Customer Name")
+    customer_name = fields.Many2one('res.partner', string="Customer")
     product = fields.Many2one('product.product', string="Product")
-    series_name = fields.Char(string="Series Name")
-    style_no = fields.Char(string="Style No")
-    qty = fields.Integer(string="Quantity")
-    brand_name = fields.Char(string="Brand Name")
-    pattern_maker_name = fields.Many2one('hr.employee', string="Pattern Maker Name")
-    sample_maker_name = fields.Many2one('hr.employee', string="Sample Maker Name")
-    merchandiser_name = fields.Many2one('hr.employee', string="Merchandiser Maker Name")
+    series_name = fields.Char(string="Series")
+    style_no = fields.Char(string="Style")
+    # qty = fields.Integer(string="Quantity")
+    brand_name = fields.Char(string="Brand")
+    pattern_maker_name = fields.Many2one('hr.employee', string="Pattern Maker")
+    sample_maker_name = fields.Many2one('hr.employee', string="Sample Maker")
+    merchandiser_name = fields.Many2one('hr.employee', string="Merchandiser")
     sample_lead_time = fields.Date(string="Sample Lead time")
-    instruction = fields.Char(string="Instruction")
-    manufacturing_order_no = fields.Many2one('mrp.production', string="Manufacturing order No ", )
+    # manufacturing_order_no = fields.Many2one('mrp.production', string="Manufacturing order No ", )
     state = fields.Selection([
         ('draft', 'Draft'),
         ('confirm', 'Confirm'),
@@ -47,9 +46,9 @@ class MerchandisingSheet(models.Model):
         result = super(MerchandisingSheet, self).create(vals)
         return result
 
-    @api.onchange('manufacturing_order_no')
-    def onchange_qty(self):
-        self.qty = self.manufacturing_order_no.product_qty
+    # @api.onchange('manufacturing_order_no')
+    # def onchange_qty(self):
+    #     self.qty = self.manufacturing_order_no.product_qty
 
     def md_sheet_confirm(self):
         for rec in self:
@@ -185,7 +184,7 @@ class MerchandisingSheetLine(models.Model):
             rec.pcs = rec.part_name.pcs
             rec.size = rec.part_name.size
             rec.uom = rec.part_name.uom
-            rec.factory_loss = rec.part_name.loss_percentage
+            # rec.factory_loss = rec.part_name.loss_percentage
 
     @api.depends('length', 'width', 'pcs')
     def calculate_net(self):

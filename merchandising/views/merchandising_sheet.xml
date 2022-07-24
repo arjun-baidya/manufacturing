@@ -14,7 +14,7 @@
                 <field name="sample_maker_name"/>
                 <field name="merchandiser_name"/>
                 <field name="sample_lead_time"/>
-                <field name="instruction"/>
+<!--                <field name="instruction"/>-->
             </tree>
         </field>
     </record>
@@ -41,20 +41,19 @@
                     </div>
                     <group>
                         <group>
+                            <field name="product"/>
                             <field name="customer_name"/>
+                            <field name="brand_name"/>
                             <field name="series_name"/>
                             <field name="style_no"/>
-                            <field name="qty"/>
-                            <field name="brand_name"/>
-                            <field name="product"/>
+<!--                            <field name="qty"/>-->
                         </group>
                         <group>
+                            <field name="merchandiser_name"/>
                             <field name="pattern_maker_name"/>
                             <field name="sample_maker_name"/>
-                            <field name="merchandiser_name"/>
                             <field name="sample_lead_time"/>
-                            <field name="instruction"/>
-                            <field name="manufacturing_order_no"/>
+<!--                            <field name="manufacturing_order_no"/>-->
                         </group>
                     </group>
 

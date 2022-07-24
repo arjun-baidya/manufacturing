@@ -10,7 +10,7 @@
                 <field name="net_qty"/>
             </xpath>
             <xpath expr="//field[@name='product_tmpl_id']" position="before">
-                <field name="name"/>
+                <field name="name_id"/>
             </xpath>
             <xpath expr="/form/*" position="before">
                 <header>

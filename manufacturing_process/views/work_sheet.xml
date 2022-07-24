@@ -33,6 +33,7 @@
                     <group>
                         <field name="master_work_sheet_id"/>
                         <field name="work_center_name"/>
+                        <field name="current_user"/>
                     </group>
                     <notebook>
                         <page string="Work Sheet Cutting" >

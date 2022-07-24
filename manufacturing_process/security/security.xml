@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="manufacturing_process_module">
+             <field name="name">Manufacturing Process</field>
+             <field name="description">User access levels for manufacturing process module</field>
+             <field name="sequence">10</field>
+        </record>
+
+        <record id="manufacturing_process_user_access" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="manufacturing_process.manufacturing_process_module"/>
+        </record>
+        <record id="manufacturing_process_manager_access" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="manufacturing_process.manufacturing_process_module"/>
+            <field name="implied_ids" eval="[(4, ref('manufacturing_process_user_access'))]"/>
+        </record>
+
+    </data>
+</odoo>
