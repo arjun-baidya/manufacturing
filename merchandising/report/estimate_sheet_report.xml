@@ -44,8 +44,8 @@
                                                 <th class="text-left">Total Consumption</th>
                                                 <th class="text-left">Unit</th>
                                                 <th class="text-left">Loss %</th>
-                                                <th class="text-left">Unit Price</th>
-                                                <th class="text-left">Total</th>
+                                                <!-- <th class="text-left">Unit Price</th>-->
+                                                <!-- <th class="text-left">Total</th>-->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -71,16 +71,16 @@
                                                             <t t-esc="'%.2f'% line.net_loss"/>
                                                         </a>
                                                     </td>
-                                                    <td style="text-align:justify">
-                                                        <a>
-                                                            <t t-esc="line.unit_price"/>
-                                                        </a>
-                                                    </td>
-                                                    <td style="text-align:justify">
-                                                        <a>
-                                                            <t t-esc=" '%.2f'% line.total"/>
-                                                        </a>
-                                                    </td>
+<!--                                                    <td style="text-align:justify">-->
+<!--                                                        <a>-->
+<!--                                                            <t t-esc="line.unit_price"/>-->
+<!--                                                        </a>-->
+<!--                                                    </td>-->
+<!--                                                    <td style="text-align:justify">-->
+<!--                                                        <a>-->
+<!--                                                            <t t-esc=" '%.2f'% line.total"/>-->
+<!--                                                        </a>-->
+<!--                                                    </td>-->
                                                 </tr>
                                             </t>
                                         </tbody>

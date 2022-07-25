@@ -1,18 +1,22 @@
 from odoo import fields, models, api, _
+import datetime
 
 
 class MerchandisingSheet(models.Model):
     _name = 'merchandising.sheet'
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    # _inherits = {'sample.pattern.cut': 'pattern_cut'}
     _description = "merchandising sheet"
     _rec_name = 'reference'
 
+    # pattern_cut = fields.Many2one('sample.pattern.cut', "Source", ondelete='cascade', required=True)
     reference = fields.Char('#MD NO', required=True, copy=False, readonly=True, index=True,
                             default=lambda self: _('New'))
     customer_name = fields.Many2one('res.partner', string="Customer")
     product = fields.Many2one('product.product', string="Product")
     series_name = fields.Char(string="Series")
     style_no = fields.Char(string="Style")
+    images = fields.Image(string="Image", max_width=120, max_height=120)
     # qty = fields.Integer(string="Quantity")
     brand_name = fields.Char(string="Brand")
     pattern_maker_name = fields.Many2one('hr.employee', string="Pattern Maker")
@@ -31,10 +35,10 @@ class MerchandisingSheet(models.Model):
     ], default='draft', track_visibility='onchange')
 
     order_line = fields.One2many('merchandising.sheet.line', 'order_id', string='Order Lines')
-    merchandising_duplicate_line_ids = fields.One2many('merchandising.sheet.line.duplicate',
-                                                       'merchandising_duplicate_line_id', string="ids")
+    consumption_line_ids = fields.One2many('consumption.line',
+                                           'consumption_line_id', string="ids")
     pattern_cut_line_ids = fields.One2many('merchandising.sheet.line', 'order_id', string="Pattern Cut line")
-
+    instruction_line_ids = fields.One2many('instruction.line', 'instruction_line_id', string="ids")
     # link for sample.pattern.cut model
     pattern_cut_ids = fields.One2many('sample.pattern.cut', 'merchandising_sheet_id',
                                       string='Pattern Cut')
@@ -81,29 +85,30 @@ class MerchandisingSheet(models.Model):
                 if line.id in self.order_line.ids:
                     line_ids = self.order_line.filtered(lambda m: m.product_id.id == line.product_id.id)
                     net_for_report = 0.0
-                    total_for_report = 0.0
+                    # total_for_report = 0.0
                     for qty in line_ids:
                         net_for_report += qty.net
-                        total_for_report += qty.total
+                        # total_for_report += qty.total
                     val = {
                         'product_id_for_report': line_ids[0].product_id.name,
                         'net_for_report': net_for_report,
                         'uom_for_report': line_ids[0].uom.name,
-                        'net_loss_for_report': line_ids[0].net_loss,
-                        'unit_price_for_report': line_ids[0].unit_price,
-                        'total_for_report': total_for_report,
+                        # 'net_loss_for_report': line_ids[0].net_loss,
+                        # 'unit_price_for_report': line_ids[0].unit_price,
+                        # 'total_for_report': total_for_report,
                         'arrange_by': '',
                         'supplier': '',
                     }
                 lines.append((0, 0, val))
-                self.merchandising_duplicate_line_ids = lines
-                self.merge_duplicate_materials_duplicate()
+                self.consumption_line_ids = lines
+                self.merge_consumption_line()
 
-    def merge_duplicate_materials_duplicate(self):
-        if self.merchandising_duplicate_line_ids:
-            for line in self.merchandising_duplicate_line_ids:
-                if line.id in self.merchandising_duplicate_line_ids.ids:
-                    line_ids = self.merchandising_duplicate_line_ids.filtered(lambda m: m.product_id_for_report == line.product_id_for_report)
+    def merge_consumption_line(self):
+        if self.consumption_line_ids:
+            for line in self.consumption_line_ids:
+                if line.id in self.consumption_line_ids.ids:
+                    line_ids = self.consumption_line_ids.filtered(
+                        lambda m: m.product_id_for_report == line.product_id_for_report)
                     line_ids[0].write({
                         'product_id_for_report': line_ids[0].product_id_for_report,
                     })
@@ -120,7 +125,8 @@ class MerchandisingSheetLine(models.Model):
     product_id_for_report = fields.Char()
     pattern = fields.Many2one('sample.pattern.cut', string="Pattern")
     part_name = fields.Many2one('pattern.cut.line', string="Part Name")
-    type = fields.Selection([('leather', 'Leather'), ('lining', 'Lining'), ('rf', 'Reinforcement'), ('zipper', 'Zipper')], required=True)
+    type = fields.Selection(
+        [('leather', 'Leather'), ('lining', 'Lining'), ('rf', 'Reinforcement'), ('zipper', 'Zipper')], required=True)
     combination = fields.Many2many('product.product', string="Combination")
     length = fields.Float(string="Length")
     width = fields.Float(string="Width")
@@ -131,17 +137,12 @@ class MerchandisingSheetLine(models.Model):
     net = fields.Float(string="Net", compute='calculate_net')
     net_for_report = fields.Float()
     factory_loss = fields.Float(string="Factory Loss %")
-    buyer_loss = fields.Float(string="Buyer Loss %")
-    purchase_loss = fields.Float(string="Purchase Loss %")
     net_loss = fields.Float(string="Net Loss", compute="calculate_net_loss", store=True)
     net_loss_for_report = fields.Float()
-    net_buyer = fields.Float(string="Net Buyer", compute='calculate_net_buyer', store=True)
-    net_purchase = fields.Float(string="Net Purchase", compute='calculate_net_purchase')
-    bom_no = fields.Many2one('mrp.bom', string="BOM")
-    unit_price = fields.Float(string="Unit Price")
-    unit_price_for_report = fields.Float()
-    total = fields.Float(string="Total")
-    total_for_report = fields.Float()
+    # unit_price = fields.Float(string="Unit Price")
+    # unit_price_for_report = fields.Float()
+    # total = fields.Float(string="Total")
+    # total_for_report = fields.Float()
 
     ##################
     order_id = fields.Many2one('merchandising.sheet', string='Order Reference')
@@ -198,29 +199,47 @@ class MerchandisingSheetLine(models.Model):
             percentage = (rec.net * rec.factory_loss) / 100
             rec.net_loss = percentage + rec.net
 
-    @api.depends('net', 'buyer_loss')
-    def calculate_net_buyer(self):
-        for rec in self:
-            percentage = (rec.net * rec.buyer_loss) / 100
-            rec.net_buyer = percentage + rec.net
 
-    @api.depends('net', 'purchase_loss')
-    def calculate_net_purchase(self):
-        for rec in self:
-            percentage = (rec.net * rec.purchase_loss) / 100
-            rec.net_purchase = percentage + rec.net
-
-
-class MerchandisingSheetLineDuplicate(models.Model):
-    _name = 'merchandising.sheet.line.duplicate'
-    _description = "Duplicate merchandising line"
+class ConsumptionLine(models.Model):
+    _name = 'consumption.line'
+    _description = "consumption line"
 
     product_id_for_report = fields.Char(string="Materials")
     uom_for_report = fields.Char(string="UOM")
     net_for_report = fields.Float(string="Net")
-    net_loss_for_report = fields.Float(string="Net Loss")
+    # net_loss_for_report = fields.Float(string="Net Loss")
+    buyer_loss = fields.Float(string="Buyer Loss %")
+    purchase_loss = fields.Float(string="Purchase Loss %")
+    net_buyer = fields.Float(string="Net Buyer", compute='calculate_net_buyer', store=True)
+    net_purchase = fields.Float(string="Net Purchase", compute='calculate_net_purchase')
+    bom_no = fields.Many2one('mrp.bom', string="BOM")
     unit_price_for_report = fields.Float(string="Unit Price")
     total_for_report = fields.Float(string="Total")
     arrange_by = fields.Many2one('res.partner', string="Arrange-By")
     supplier = fields.Many2one('res.partner', string="Supplier", help="Maker")
-    merchandising_duplicate_line_id = fields.Many2one('merchandising.sheet', string="id")
+    consumption_line_id = fields.Many2one('merchandising.sheet', string="id")
+
+    @api.depends('net_for_report', 'buyer_loss')
+    def calculate_net_buyer(self):
+        for rec in self:
+            percentage = (rec.net_for_report * rec.buyer_loss) / 100
+            rec.net_buyer = percentage + rec.net_for_report
+
+    @api.depends('net_for_report', 'purchase_loss')
+    def calculate_net_purchase(self):
+        for rec in self:
+            percentage = (rec.net_for_report * rec.purchase_loss) / 100
+            rec.net_purchase = percentage + rec.net_for_report
+
+
+class InstructionLine(models.Model):
+    _name = 'instruction.line'
+    _description = "Instruction Line model"
+
+    instruction_name = fields.Char(string="Name")
+    date = fields.Datetime('Last Poll', default=lambda self: fields.Datetime.now())
+    attachment = fields.Binary(string="Attachment")
+    instruction_line_id = fields.Many2one('merchandising.sheet', string="id")
+
+
+

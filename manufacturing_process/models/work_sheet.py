@@ -11,7 +11,7 @@ class WorkSheet(models.Model):
     master_work_sheet_id = fields.Many2one('mrp.master.worksheet', string="Master Work Sheet")
     work_center_name = fields.Selection([('cutting', 'Cutting'), ('skyving', 'Skyving'), ('assemble', 'Assemble')], )
     state = fields.Selection(
-        [('draft', 'Draft'), ('cutting', 'Cutting'), ('skiving', 'Skiving'), ('assemble', 'Assemble'),
+        [('cutting', 'Cutting'), ('skiving', 'Skiving'), ('assemble', 'Assemble'),
          ('done', 'Done')])
     work_sheet_line_ids = fields.One2many('mrp.work.sheet.line', 'work_sheet_line_id', string="ids")
     current_user = fields.Many2one('res.users', 'Current User', default=lambda self: self.env.user)
@@ -55,7 +55,7 @@ class WorkSheet(models.Model):
                     line.skiving = False
                     line.cutting = False
 
-    def cutting(self):
+    def cutting_confirm(self):
         for record in self:
             # Send Group Notification
             partner_ids = []
@@ -68,11 +68,7 @@ class WorkSheet(models.Model):
             if partner_ids:
                 record.message_post(body="You have been assigned to next step.",
                                     partner_ids=partner_ids)
-            record.state = 'cutting'
-
-    def cutting_confirm(self):
-        for rec in self:
-            rec.state = 'skiving'
+            record.state = 'skyving'
 
     def skiving_confirm(self):
         for rec in self:

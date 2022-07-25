@@ -14,7 +14,7 @@
                 <field name="sample_maker_name"/>
                 <field name="merchandiser_name"/>
                 <field name="sample_lead_time"/>
-<!--                <field name="instruction"/>-->
+                <!--                <field name="instruction"/>-->
             </tree>
         </field>
     </record>
@@ -39,6 +39,9 @@
                             <field name="reference" readonly="1"/>
                         </h2>
                     </div>
+                    <div class="oe_right">
+                        <field name="images" widget="image"/>
+                    </div>
                     <group>
                         <group>
                             <field name="product"/>
@@ -46,14 +49,14 @@
                             <field name="brand_name"/>
                             <field name="series_name"/>
                             <field name="style_no"/>
-<!--                            <field name="qty"/>-->
+                            <!--<field name="qty"/>-->
                         </group>
                         <group>
                             <field name="merchandiser_name"/>
                             <field name="pattern_maker_name"/>
                             <field name="sample_maker_name"/>
                             <field name="sample_lead_time"/>
-<!--                            <field name="manufacturing_order_no"/>-->
+                            <!--<field name="manufacturing_order_no"/>-->
                         </group>
                     </group>
 
@@ -71,12 +74,7 @@
                                     <field name="uom"/>
                                     <field name="net"/>
                                     <field name="factory_loss"/>
-                                    <field name="buyer_loss"/>
-                                    <field name="purchase_loss"/>
                                     <field name="net_loss"/>
-                                    <field name="net_buyer"/>
-                                    <field name="net_purchase"/>
-                                    <field name="bom_no"/>
                                 </tree>
                                 <form>
                                     <group>
@@ -85,41 +83,50 @@
                                             <field name="product_id"/>
                                             <field name="pattern"/>
                                             <field name="part_name"/>
-                                            <field name="type" />
+                                            <field name="type"/>
                                             <field name="combination" widget="many2many_tags"/>
                                             <field name="length"/>
                                             <field name="width"/>
+                                        </group>
+                                        <group>
                                             <field name="pcs"/>
                                             <field name="size"/>
                                             <field name="uom"/>
-                                        </group>
-                                        <group>
                                             <field name="net"/>
                                             <field name="factory_loss"/>
-                                            <field name="buyer_loss"/>
-                                            <field name="purchase_loss"/>
                                             <field name="net_loss"/>
-                                            <field name="net_buyer"/>
-                                            <field name="net_purchase"/>
-                                            <field name="bom_no"/>
-                                            <field name="unit_price"/>
-                                            <field name="total"/>
+                                            <!--<field name="unit_price"/>-->
+                                            <!--<field name="total"/>-->
                                         </group>
                                     </group>
                                 </form>
                             </field>
                         </page>
                         <page string="Consumption">
-                            <field name="merchandising_duplicate_line_ids" widget="one2many">
+                            <field name="consumption_line_ids" widget="one2many">
                                 <tree editable="bottom">
                                     <field name="product_id_for_report"/>
                                     <field name="uom_for_report"/>
                                     <field name="net_for_report"/>
-                                    <field name="net_loss_for_report"/>
+                                    <!--<field name="net_loss_for_report"/>-->
+                                    <field name="buyer_loss"/>
+                                    <field name="purchase_loss"/>
+                                    <field name="net_buyer"/>
+                                    <field name="net_purchase"/>
+                                    <field name="bom_no"/>
                                     <field name="unit_price_for_report"/>
                                     <field name="total_for_report"/>
                                     <field name="arrange_by"/>
                                     <field name="supplier"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Instruction">
+                            <field name="instruction_line_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="instruction_name"/>
+                                    <field name="date"/>
+                                    <field name="attachment"/>
                                 </tree>
                             </field>
                         </page>

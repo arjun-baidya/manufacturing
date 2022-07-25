@@ -46,9 +46,9 @@
                                                 <th class="text-left">Size</th>
                                                 <th class="text-left">Net</th>
                                                 <th class="text-left">Factory Loss</th>
-                                                <th class="text-left">Buyer Loss</th>
+<!--                                                <th class="text-left">Buyer Loss</th>-->
                                                 <th class="text-left">Net factory</th>
-                                                <th class="text-left">Net buyer</th>
+<!--                                                <th class="text-left">Net buyer</th>-->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -95,21 +95,21 @@
                                                                 <t t-esc=" '%.2f'% line.factory_loss"/>
                                                             </a>
                                                         </td>
-                                                        <td>
-                                                            <a>
-                                                                <t t-esc=" '%.2f'% line.buyer_loss"/>
-                                                            </a>
-                                                        </td>
+<!--                                                        <td>-->
+<!--                                                            <a>-->
+<!--                                                                <t t-esc=" '%.2f'% line.buyer_loss"/>-->
+<!--                                                            </a>-->
+<!--                                                        </td>-->
                                                         <td>
                                                             <a>
                                                                 <t t-esc=" '%.2f'%  line.net_loss"/>
                                                             </a>
                                                         </td>
-                                                        <td>
-                                                            <a>
-                                                                <t t-esc=" '%.2f'%  line.net_buyer"/>
-                                                            </a>
-                                                        </td>
+<!--                                                        <td>-->
+<!--                                                            <a>-->
+<!--                                                                <t t-esc=" '%.2f'%  line.net_buyer"/>-->
+<!--                                                            </a>-->
+<!--                                                        </td>-->
                                                     </tr>
                                                 </t>
                                             </t>

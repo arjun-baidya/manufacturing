@@ -1,9 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_merchandising_sheet,access.merchandising.sheet,model_merchandising_sheet,,1,1,1,1
 access_merchandising_sheet_line,access.merchandising.sheet.line,model_merchandising_sheet_line,,1,1,1,1
-access_merchandising_sheet_line_duplicate,access.merchandising.sheet.line.duplicate,model_merchandising_sheet_line_duplicate,,1,1,1,1
+access_consumption_line,access.consumption.line,model_consumption_line,,1,1,1,1
 access_sample_pattern_cut,access.sample.pattern.cut,model_sample_pattern_cut,,1,1,1,1
 access_pattern_cut_line,access.pattern.cut.line,model_pattern_cut_line,,1,1,1,1
-
+access_instruction_line,access.instruction.line,model_instruction_line,,1,1,1,1
 
 
