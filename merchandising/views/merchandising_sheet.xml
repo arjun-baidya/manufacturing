@@ -72,6 +72,7 @@
                                     <field name="pcs"/>
                                     <field name="size"/>
                                     <field name="uom"/>
+                                    <field name="consumption"/>
                                     <field name="net"/>
                                     <field name="factory_loss"/>
                                     <field name="net_loss"/>
@@ -92,6 +93,7 @@
                                             <field name="pcs"/>
                                             <field name="size"/>
                                             <field name="uom"/>
+                                            <field name="consumption"/>
                                             <field name="net"/>
                                             <field name="factory_loss"/>
                                             <field name="net_loss"/>

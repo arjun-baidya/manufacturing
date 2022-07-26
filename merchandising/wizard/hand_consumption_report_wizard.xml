@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Form View for  -->
+    <record id="hand_consumption_wizard_form_view" model="ir.ui.view">
+        <field name="name">hand.consumption.wizard.form.view</field>
+        <field name="model">hand.consumption.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                    <group>
+                            <field name="style_no"/>
+                    </group>
+                <footer>
+                    <button name="action_report_print" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action  -->
+    <record id="action_hand_consumption_wizard" model="ir.actions.act_window" >
+        <field name="name"> hand consumption </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hand.consumption.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

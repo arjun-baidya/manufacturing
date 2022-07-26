@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 	<!--	Root manu merchandising -->
-    <menuitem id="merchandising_sheet_root" name="Merchandising" action="merchandising.action_merchandising_sheet" sequence="3"/>
+    <menuitem id="merchandising_sheet_root" name="Merchandising"  sequence="1"/>
 
 	<!--	main merchandising manu -->
-   <menuitem id="menu_merchandising_sheet" name="Merchandising Sheet" parent="merchandising.merchandising_sheet_root" sequence="1" action="merchandising.action_merchandising_sheet"/>
+   <menuitem id="menu_merchandising_sheet" name="Merchandising Sheet" parent="merchandising.merchandising_sheet_root" sequence="2" action="merchandising.action_merchandising_sheet"/>
 
 	<!--	merchandising configure manu-->
-    <menuitem id="menu_merchandising_configuration" name="Configuration" parent="merchandising.merchandising_sheet_root" sequence="2" action="merchandising.action_merchandising_sheet"/>
+    <menuitem id="menu_merchandising_configuration" name="Configuration" parent="merchandising.merchandising_sheet_root" sequence="3" action="merchandising.action_merchandising_sheet"/>
 
 	<!--	pattern cut manu -->
     <menuitem id="sample_pattern_cut_menu" name="Pattern Cutting" parent="merchandising.menu_merchandising_configuration" action="merchandising.action_sample_pattern_cut"/>
 
-
-
+    <!--report menu-->
+    <menuitem id="report_menu" name="Report" parent="merchandising_sheet_root" sequence="40"/>
+    <menuitem id="report_menu_hand_consumption" name="Hand Consumption" parent="merchandising.report_menu" action="merchandising.action_hand_consumption_wizard"/>
 
 </odoo>

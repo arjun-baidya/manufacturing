@@ -131,6 +131,7 @@ class MerchandisingSheetLine(models.Model):
     length = fields.Float(string="Length")
     width = fields.Float(string="Width")
     pcs = fields.Integer(string="PCS")
+    consumption = fields.Float(string="Consumption", compute="compute_calc")
     size = fields.Integer(string="Size")
     uom = fields.Many2one('uom.uom', string="UOM")
     uom_for_report = fields.Char()
@@ -198,6 +199,11 @@ class MerchandisingSheetLine(models.Model):
         for rec in self:
             percentage = (rec.net * rec.factory_loss) / 100
             rec.net_loss = percentage + rec.net
+
+    @api.depends('length', 'width', 'pcs')
+    def compute_calc(self):
+        for rec in self:
+            rec.consumption = rec.length * rec.width * rec.pcs
 
 
 class ConsumptionLine(models.Model):

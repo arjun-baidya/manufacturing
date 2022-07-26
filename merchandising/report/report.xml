@@ -105,4 +105,14 @@
         <field name="paperformat_id" ref="merchandising.paperformat_pattern_cut_label"/>
     </record>
 
+     <record id="report_filter_hand_consumption" model="ir.actions.report">
+        <field name="name">Hand Consumption</field>
+        <field name="model">hand.consumption.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">merchandising.filter_report_hand_consumption_id</field>
+        <field name="report_file">merchandising.filter_report_hand_consumption_id</field>
+        <field name="binding_model_id" ref="model_hand_consumption_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
 </odoo>
