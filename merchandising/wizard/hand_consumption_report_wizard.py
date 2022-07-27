@@ -22,4 +22,6 @@ class HandConsumptionReportWizard(models.TransientModel):
             merchandising.append(vals)
         data['merchandising_data'] = merchandising
         print('data :', data['merchandising_data'])
-        return self.env.ref('merchandising.report_filter_hand_consumption').report_action(self, data=merchandising)
+        return self.env.ref('merchandising.report_filter_hand_consumption').report_action(self, data=data)
+
+

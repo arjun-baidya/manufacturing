@@ -39,6 +39,7 @@ class MerchandisingSheet(models.Model):
                                            'consumption_line_id', string="ids")
     pattern_cut_line_ids = fields.One2many('merchandising.sheet.line', 'order_id', string="Pattern Cut line")
     instruction_line_ids = fields.One2many('instruction.line', 'instruction_line_id', string="ids")
+    sample_development_line_ids = fields.One2many('sample.development.line', 'sample_development_line_id', string="ids")
     # link for sample.pattern.cut model
     pattern_cut_ids = fields.One2many('sample.pattern.cut', 'merchandising_sheet_id',
                                       string='Pattern Cut')
@@ -248,4 +249,13 @@ class InstructionLine(models.Model):
     instruction_line_id = fields.Many2one('merchandising.sheet', string="id")
 
 
+class SampleDevelopmentLine(models.Model):
+    _name = 'sample.development.line'
+    _description = "Sample development Line model"
 
+    name = fields.Char(string="Name")
+    attachment = fields.Binary(string="Attachment")
+    date = fields.Datetime(string="Date")
+    feedback = fields.Binary(string="Feed-Back")
+    feedback_date = fields.Datetime(string="Feed-back Date")
+    sample_development_line_id = fields.Many2one('merchandising.sheet', string="id")

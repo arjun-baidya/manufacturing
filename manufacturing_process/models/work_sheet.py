@@ -68,7 +68,7 @@ class WorkSheet(models.Model):
             if partner_ids:
                 record.message_post(body="You have been assigned to next step.",
                                     partner_ids=partner_ids)
-            record.state = 'skyving'
+            record.state = 'skiving'
 
     def skiving_confirm(self):
         for rec in self:
