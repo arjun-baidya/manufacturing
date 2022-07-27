@@ -8,20 +8,7 @@ class HandConsumptionReportWizard(models.TransientModel):
     style_no = fields.Char(string="Style")
 
     def action_report_print(self):
-        data = {
-                # 'form_data': self.read()[0],
-                'model': 'hand.consumption.report.wizard',
-                'form': self.read()[0],
-            }
-        merchandising_data = self.env['merchandising.sheet'].search([('style_no', '=', self.style_no)])
-        merchandising = []
-        for rec in merchandising_data:
-            vals = {
-                'style_no': rec.style_no,
-            }
-            merchandising.append(vals)
-        data['merchandising_data'] = merchandising
-        print('data :', data['merchandising_data'])
-        return self.env.ref('merchandising.report_filter_hand_consumption').report_action(self, data=data)
-
+        data = {}
+        data['style'] = self.style_no
+        return self.env.ref('merchandising.report_filter_hand_consumption').report_action(None, data=data)
 

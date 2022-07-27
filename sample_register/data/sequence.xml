@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--        document register-->
+        <record id="seq_sample_document_register" model="ir.sequence">
+            <field name="name">Sample Document Register</field>
+            <field name="code">document.register.sequence</field>
+            <field name="prefix">SDR</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
+

@@ -6,6 +6,7 @@
         <field name="model">merchandising.sheet</field>
         <field name="arch" type="xml">
             <tree string="Merchandising">
+                <field name="reference"/>
                 <field name="customer_name"/>
                 <field name="series_name"/>
                 <field name="style_no"/>
@@ -85,7 +86,6 @@
                                             <field name="pattern"/>
                                             <field name="part_name"/>
                                             <field name="type"/>
-                                            <field name="combination" widget="many2many_tags"/>
                                             <field name="length"/>
                                             <field name="width"/>
                                         </group>
@@ -108,6 +108,7 @@
                             <field name="consumption_line_ids" widget="one2many">
                                 <tree editable="bottom">
                                     <field name="product_id_for_report"/>
+                                    <field name="combination" widget="many2many_tags"/>
                                     <field name="uom_for_report"/>
                                     <field name="net_for_report"/>
                                     <!--<field name="net_loss_for_report"/>-->

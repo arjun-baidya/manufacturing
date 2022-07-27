@@ -5,11 +5,9 @@ import datetime
 class MerchandisingSheet(models.Model):
     _name = 'merchandising.sheet'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    # _inherits = {'sample.pattern.cut': 'pattern_cut'}
     _description = "merchandising sheet"
     _rec_name = 'reference'
 
-    # pattern_cut = fields.Many2one('sample.pattern.cut', "Source", ondelete='cascade', required=True)
     reference = fields.Char('#MD NO', required=True, copy=False, readonly=True, index=True,
                             default=lambda self: _('New'))
     customer_name = fields.Many2one('res.partner', string="Customer")
@@ -128,7 +126,6 @@ class MerchandisingSheetLine(models.Model):
     part_name = fields.Many2one('pattern.cut.line', string="Part Name")
     type = fields.Selection(
         [('leather', 'Leather'), ('lining', 'Lining'), ('rf', 'Reinforcement'), ('zipper', 'Zipper')], required=True)
-    combination = fields.Many2many('product.product', string="Combination")
     length = fields.Float(string="Length")
     width = fields.Float(string="Width")
     pcs = fields.Integer(string="PCS")
@@ -212,6 +209,7 @@ class ConsumptionLine(models.Model):
     _description = "consumption line"
 
     product_id_for_report = fields.Char(string="Materials")
+    combination = fields.Many2many('product.product', string="Combination")
     uom_for_report = fields.Char(string="UOM")
     net_for_report = fields.Float(string="Net")
     # net_loss_for_report = fields.Float(string="Net Loss")
