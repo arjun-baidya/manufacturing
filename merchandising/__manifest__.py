@@ -22,6 +22,8 @@
         'views/merchandising_sheet.xml',
         'views/pattern_cut.xml',
         'wizard/hand_consumption_report_wizard.xml',
+        'wizard/all_consumption_report_wizard.xml',
+        'report/all_consumption_report.xml',
         'report/hand_consumption.xml',
         'report/hand_consumption_report_filter.xml',
         'report/pattern_cut_report.xml',

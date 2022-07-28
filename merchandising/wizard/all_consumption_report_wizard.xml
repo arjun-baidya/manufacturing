@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Form View for  -->
+    <record id="all_consumption_wizard_form_view" model="ir.ui.view">
+        <field name="name">all.consumption.wizard.form.view</field>
+        <field name="model">all.consumption.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="style_no"/>
+                        <field name="manufacturing_order" widget="many2many_tags"/>
+                    </group>
+                    <notebook>
+                        <page string="line">
+                            <field name="all_consumption_line_ids">
+                                <tree>
+                                    <field name="manufac_order"/>
+                                    <field name="materials"/>
+                                    <field name="consume"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_report_print" string="Print" type="object" class="btn-primary"/>
+                    <button name="merge_duplicate_line" string="Merge" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action  -->
+    <record id="action_all_consumption_wizard" model="ir.actions.act_window" >
+        <field name="name"> all consumption </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">all.consumption.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -15,5 +15,6 @@
     <!--report menu-->
     <menuitem id="report_menu" name="Report" parent="merchandising_sheet_root" sequence="40"/>
     <menuitem id="report_menu_hand_consumption" name="Hand Consumption" parent="merchandising.report_menu" action="merchandising.action_hand_consumption_wizard"/>
+    <menuitem id="report_menu_all_consumption" name="All Consumption" parent="merchandising.report_menu" action="merchandising.action_all_consumption_wizard"/>
 
 </odoo>

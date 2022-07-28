@@ -8,3 +8,6 @@ access_instruction_line,access.instruction.line,model_instruction_line,,1,1,1,1
 access_hand_consumption_report_wizard,access.hand.consumption.report.wizard,model_hand_consumption_report_wizard,,1,1,1,1
 access_sample_development_line,access.sample.development.line,model_sample_development_line,,1,1,1,1
 
+access_all_consumption_report_wizard,access.all.consumption.report.wizard,model_all_consumption_report_wizard,,1,1,1,1
+access_all_consumption_line,access.all.consumption.line,model_all_consumption_line,,1,1,1,1
+

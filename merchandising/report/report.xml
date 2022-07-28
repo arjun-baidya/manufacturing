@@ -115,4 +115,14 @@
         <field name="binding_type">report</field>
     </record>
 
+    <record id="report_all_consumption" model="ir.actions.report">
+        <field name="name">All Consumption</field>
+        <field name="model">all.consumption.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">merchandising.all_consumption_report_template</field>
+        <field name="report_file">merchandising.all_consumption_report_template</field>
+        <field name="binding_model_id" ref="model_all_consumption_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
 </odoo>
