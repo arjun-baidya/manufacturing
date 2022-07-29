@@ -55,10 +55,6 @@ class MerchandisingSheet(models.Model):
     #         result.append((rec.id, str(rec.style_no)))
     #     return result
 
-    # @api.onchange('manufacturing_order_no')
-    # def onchange_qty(self):
-    #     self.qty = self.manufacturing_order_no.product_qty
-
     def md_sheet_confirm(self):
         for rec in self:
             rec.state = 'confirm'
@@ -197,7 +193,7 @@ class MerchandisingSheetLine(models.Model):
             rec.pattern_uom = rec.part_name.uom
             # rec.factory_loss = rec.part_name.loss_percentage
 
-    @api.depends('length', 'width', 'pcs')
+    @api.depends('length', 'width', 'pcs', 'uom', 'pattern_uom')
     def calculate_net(self):
         for rec in self:
             rec_net = (rec.length * rec.width * rec.pcs)
