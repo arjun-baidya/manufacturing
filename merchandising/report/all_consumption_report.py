@@ -4,18 +4,20 @@ from odoo import fields, models, api
 class AllConsumptionReport(models.AbstractModel):
     _name = 'report.merchandising.all_consumption_report_template'
 
+    # if self.env.context.get('active_id'):
+    #     departure_date = self.env['hr.employee'].browse(self.env.context['active_id'])
     @api.model
     def _get_report_values(self, docids, data):
         manufacturing_data = self.env['mrp.production'].search([('style_no', '=', data['style'])])
-        merge_data = self.env['all.consumption.report.wizard'].search([])
-        merge_datas = []
-        for merge in merge_data.all_consumption_line_ids:
-            val = {
-                'materials': merge.materials,
-                'consume': merge.consume,
-            }
-            merge_datas.append(val)
-        print(merge_datas)
+        if self.env.context.get('active_id'):
+            merge_data = self.env['all.consumption.report.wizard'].browse(self.env.context['active_id'])
+            merge_datas = []
+            for merge in merge_data.all_consumption_line_ids:
+                val = {
+                    'materials': merge.materials,
+                    'consume': merge.consume,
+                }
+                merge_datas.append(val)
         form_data = []
         for data in manufacturing_data[0]:
             val = {

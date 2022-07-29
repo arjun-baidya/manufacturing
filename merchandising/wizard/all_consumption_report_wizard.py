@@ -5,7 +5,18 @@ class AllConsumptionReportWizard(models.TransientModel):
     _name = 'all.consumption.report.wizard'
     _description = "All consumption report wizard"
 
-    style_no = fields.Char(string="Style")
+    def _style_domain(self):
+        # self.env.cr.execute("""
+        #             SELECT style_no FROM merchandising_sheet
+        #         """)
+        # print(self.env.cr.fetchall())
+        # return [([r[0] for r in self.env.cr.fetchall()])]
+        datas = self.env['merchandising.sheet'].search([])
+        data = datas.mapped('style_no')
+        print(data)
+        return str(data)
+
+    style_no = fields.Many2one('merchandising.sheet', string="Style",)
     manufacturing_order = fields.Many2many('mrp.production', string="Manufacturing Order")
     all_consumption_line_ids = fields.One2many('all.consumption.line', 'all_consumption_line_id', string="ids")
 
@@ -53,3 +64,4 @@ class AllConsumptionLine(models.TransientModel):
     materials = fields.Char(string="Materials")
     consume = fields.Integer(string="Consume")
     all_consumption_line_id = fields.Many2one('all.consumption.report.wizard', 'id')
+

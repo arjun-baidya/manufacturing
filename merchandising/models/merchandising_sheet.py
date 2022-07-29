@@ -49,6 +49,12 @@ class MerchandisingSheet(models.Model):
         result = super(MerchandisingSheet, self).create(vals)
         return result
 
+    # def name_get(self):
+    #     result = []
+    #     for rec in self:
+    #         result.append((rec.id, str(rec.style_no)))
+    #     return result
+
     # @api.onchange('manufacturing_order_no')
     # def onchange_qty(self):
     #     self.qty = self.manufacturing_order_no.product_qty
@@ -132,6 +138,7 @@ class MerchandisingSheetLine(models.Model):
     consumption = fields.Float(string="Consumption", compute="compute_calc")
     size = fields.Integer(string="Size")
     uom = fields.Many2one('uom.uom', string="UOM")
+    pattern_uom = fields.Many2one('uom.uom', string="Pattern UOM")
     uom_for_report = fields.Char()
     net = fields.Float(string="Net", compute='calculate_net')
     net_for_report = fields.Float()
@@ -176,6 +183,10 @@ class MerchandisingSheetLine(models.Model):
         }
         return res
 
+    @api.onchange('product_id')
+    def onchange_uom(self):
+        self.uom = self.product_id.uom_id
+
     @api.onchange('part_name')
     def onchange_data(self):
         for rec in self:
@@ -183,7 +194,7 @@ class MerchandisingSheetLine(models.Model):
             rec.width = rec.part_name.width
             rec.pcs = rec.part_name.pcs
             rec.size = rec.part_name.size
-            rec.uom = rec.part_name.uom
+            rec.pattern_uom = rec.part_name.uom
             # rec.factory_loss = rec.part_name.loss_percentage
 
     @api.depends('length', 'width', 'pcs')

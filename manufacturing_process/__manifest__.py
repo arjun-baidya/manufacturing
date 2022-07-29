@@ -16,6 +16,7 @@
             'hr',
             'hr_contract',
             'mrp',
+            'product',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -25,6 +26,7 @@
         'views/manufacturing_inherit.xml',
         'views/master_worksheet.xml',
         'views/work_sheet.xml',
+        'views/product_inherit.xml',
         'views/menu_items.xml',
     ],
     'installable': True,
